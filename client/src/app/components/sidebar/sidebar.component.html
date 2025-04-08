@@ -8,5 +8,20 @@
       </li>
       }
     </ul>
+    <input
+      type="text"
+      [(ngModel)]="newTodoListTitle"
+      placeholder="New Todo List"
+    />
+    <button (click)="addTodoList()">Add Todo List</button>
+
+    <input type="text" [(ngModel)]="email" placeholder="email" />
+    <input type="text" [(ngModel)]="password" placeholder="Password" />
+    <button (click)="register()">Create User</button>
+
+    <input type="text" [(ngModel)]="loginEmail" placeholder="email" />
+    <input type="text" [(ngModel)]="loginPassword" placeholder="Password" />
+    <button (click)="login()">Login</button>
+    <button (click)="logout()">Logout</button>
   </div>
 </aside>
