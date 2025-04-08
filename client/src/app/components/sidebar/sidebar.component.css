@@ -1,0 +1,27 @@
+.sidebar {
+  flex: 1 0 0;
+  gap: 4px;
+}
+
+ul,
+li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+}
+
+li {
+  padding: 12px;
+  cursor: pointer;
+  border-bottom: 2px solid white;
+  background-color: antiquewhite;
+}
+
+button {
+  padding: 4px 10px;
+}

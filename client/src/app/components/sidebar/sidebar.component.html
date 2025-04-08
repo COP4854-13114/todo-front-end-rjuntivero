@@ -1,0 +1,12 @@
+<aside>
+  <div class="sidebar">
+    <ul></ul>
+    <ul>
+      @for (todolists of visibleTodoLists; track todolists.id) {
+      <li>
+        {{ todolists.title }}
+      </li>
+      }
+    </ul>
+  </div>
+</aside>
