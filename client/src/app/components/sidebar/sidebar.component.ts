@@ -1,42 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-
-interface TodoList {
-  id: number;
-  title: string;
-  created_at: string;
-  created_by: number;
-  public_list: boolean;
-  list_items: TodoListItem[];
-  shared_with: SharedUser[];
-}
-
-interface TodoListItem {
-  id: number;
-  task: string;
-  completed: boolean;
-  todo_list_id: number;
-  completed_by: number | null;
-  completed_date: string | null;
-  updated_at: string;
-  due_date: string | null;
-  completed_by_user: CompletedByUser | null;
-}
-
-interface SharedUser {
-  email: string;
-}
-
-interface CompletedByUser {
-  email: string;
-  name: string;
-}
-
-interface User {
-  email: string;
-  password: string;
-}
+import { TodoList } from '../../models/TodoList.model';
+import { User } from '../../models/User.model';
 
 @Component({
   selector: 'app-sidebar',
