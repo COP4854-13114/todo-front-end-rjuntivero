@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-todolist-module',
-  imports: [],
+  imports: [MatCardModule],
   templateUrl: './todolist-module.component.html',
-  styleUrl: './todolist-module.component.css'
+  styleUrl: './todolist-module.component.css',
 })
-export class TodolistModuleComponent {
-
-}
+export class TodolistModuleComponent {}

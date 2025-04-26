@@ -1,4 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --sm-padding: 12px;
+  --med-padding: 32px;
+  --large-padding: 64px;
+  --xs: 4px;
+  --sm: 8px;
+  --md: 24px;
+  --lg: 36px;
+  --xl: 48px;
+  --2xl: 64px;
+  --3xl: 96px;
+  --4xl: 128px;
+  --5xl: 160px;
+  --6xl: 192px;
+  --7xl: 224px;
+  --8xl: 256px;
+  --9xl: 288px;
+  --10xl: 320px;
+  --11xl: 384px;
+  --12xl: 448px;
+}
+
 body {
   margin: 0;
   /* background-color: aquamarine; */
@@ -6,4 +28,17 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+.debug {
+  border: 4px solid red;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

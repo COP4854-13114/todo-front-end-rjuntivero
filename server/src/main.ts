@@ -4,11 +4,11 @@ import todoListRouter from './routers/todolist.router';
 import todoListItemRouter from './routers/todolistitem.router';
 import userRouter from './routers/user.router';
 import cors from 'cors';
-import jwt from 'jsonwebtoken';
 
 const app = express();
-const PORT = 3000;
+const PORT = 4000;
 app.use(cors());
+const HOST = '0.0.0.0';
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -29,7 +29,7 @@ app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, HOST, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
   console.log('Press Ctrl + C to stop the server');
 });

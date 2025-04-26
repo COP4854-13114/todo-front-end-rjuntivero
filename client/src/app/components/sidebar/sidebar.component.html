@@ -1,27 +1,18 @@
-<aside>
-  <div class="sidebar">
+<aside class="sidebar">
+  <div class="">
     <ul></ul>
     <ul>
-      @for (todolists of visibleTodoLists; track todolists.id) {
+      <!-- @for (todolists of visibleTodoLists; track todolists.id) {
       <li>
-        {{ todolists.title }}
+        <app-todolist-tab>{{ todolists }}</app-todolist-tab>
       </li>
-      }
+      } -->
+      <app-todolist-tab></app-todolist-tab>
+      <app-todolist-tab></app-todolist-tab>
+      <app-todolist-tab></app-todolist-tab>
+      <app-todolist-tab></app-todolist-tab>
+      <app-todolist-tab></app-todolist-tab>
+      <app-todolist-tab></app-todolist-tab>
     </ul>
-    <input
-      type="text"
-      [(ngModel)]="newTodoListTitle"
-      placeholder="New Todo List"
-    />
-    <button (click)="addTodoList()">Add Todo List</button>
-
-    <input type="text" [(ngModel)]="email" placeholder="email" />
-    <input type="text" [(ngModel)]="password" placeholder="Password" />
-    <button (click)="register()">Create User</button>
-
-    <input type="text" [(ngModel)]="loginEmail" placeholder="email" />
-    <input type="text" [(ngModel)]="loginPassword" placeholder="Password" />
-    <button (click)="login()">Login</button>
-    <button (click)="logout()">Logout</button>
   </div>
 </aside>

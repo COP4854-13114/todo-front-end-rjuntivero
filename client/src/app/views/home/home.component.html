@@ -1,10 +1,9 @@
-<p>home works!</p>
-@for (todoList of todoSignal(); track todoList.id) {
-<div>
-  <h1>{{ todoList.title }}</h1>
-  <h1>{{ todoList.shared_with }}</h1>
-  <h1>{{ todoList.created_by }}</h1>
-  <h1>{{ todoList.created_at }}</h1>
-  <h1>{{ todoList.list_items }}</h1>
+<div class="wrapper">
+  <main class="">
+    <app-todolist-module></app-todolist-module>
+    <app-todolist-module></app-todolist-module>
+    <app-todolist-module></app-todolist-module>
+    <app-todolist-module></app-todolist-module>
+    <app-todolist-module></app-todolist-module>
+  </main>
 </div>
-}

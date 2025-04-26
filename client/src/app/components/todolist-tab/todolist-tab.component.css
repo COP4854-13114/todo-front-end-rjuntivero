@@ -1,0 +1,6 @@
+li {
+  cursor: pointer;
+  width: 100%;
+  padding: var(--sm);
+  background-color: red;
+}

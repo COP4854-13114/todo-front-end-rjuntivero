@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  padding: var(--med-padding);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--md);
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+}
+
+.wrapper {
+  display: flex;
+  flex: 1;
+}

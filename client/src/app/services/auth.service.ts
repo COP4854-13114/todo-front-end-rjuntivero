@@ -32,4 +32,19 @@ export class AuthService {
     localStorage.removeItem('authToken');
     this.TokenSignal.set(null);
   }
+
+  // Register(): void {
+  //   const newUser = {
+  //     id: 0,
+  //     email: this.email,
+  //     password: this.password,
+  //     name: 'RJ',
+  //   };
+
+  //   this.http
+  //     .post<User>(' http://localhost:3000/user', newUser)
+  //     .subscribe((response) => {
+  //       console.log(newUser);
+  //     });
+  // }
 }
