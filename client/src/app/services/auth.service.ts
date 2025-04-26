@@ -27,4 +27,9 @@ export class AuthService {
       return false;
     }
   }
+
+  Logout(): void {
+    localStorage.removeItem('authToken');
+    this.TokenSignal.set(null);
+  }
 }
