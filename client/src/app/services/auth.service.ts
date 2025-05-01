@@ -104,7 +104,6 @@ export class AuthService {
       return err;
     } finally {
       this.isLoading.set(true);
-      return;
     }
   }
 }

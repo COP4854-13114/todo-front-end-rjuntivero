@@ -24,8 +24,3 @@ button {
   gap: var(--sm);
   align-items: center;
 }
-
-a {
-  text-decoration: none;
-  color: inherit;
-}

@@ -25,11 +25,16 @@ export class TodosService {
 
       this.RefreshTodoLists();
     });
+  }
 
+  getHeaders(): HttpHeaders {
     const token = localStorage.getItem('authToken');
-    if (token) {
-      this.headers = this.headers.append('Authorization', `Bearer ${token}`);
-    }
+
+    if (!token) return new HttpHeaders();
+
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
   }
 
   filterTodoLists(
@@ -41,7 +46,7 @@ export class TodosService {
       if (view === 'Public') return todo.public_list;
       if (view === 'Owned') return user && todo.created_by === user.id;
       if (view === 'Shared')
-        return !todo.public_list && todo.shared_with?.length > 0;
+        return !todo.public_list && user && todo.created_by !== user.id;
       return true;
     });
   }
@@ -66,7 +71,7 @@ export class TodosService {
     try {
       let result = await firstValueFrom(
         this.httpClient.get<TodoList[]>(`${this.BASE_URL}/todo`, {
-          headers: this.headers,
+          headers: this.getHeaders(),
         })
       );
       return result.map((todo) => ({
@@ -87,7 +92,7 @@ export class TodosService {
       let result = await firstValueFrom(
         this.httpClient.get<TodoList>(
           `${this.BASE_URL}/todo/${selectedTodoListID}`,
-          { headers: this.headers }
+          { headers: this.getHeaders() }
         )
       );
       return result;
@@ -104,7 +109,7 @@ export class TodosService {
     try {
       const res = await firstValueFrom(
         this.httpClient.post<TodoList>(`${this.BASE_URL}/todo`, list, {
-          headers: this.headers,
+          headers: this.getHeaders(),
         })
       );
       await this.RefreshTodoLists();
@@ -122,12 +127,34 @@ export class TodosService {
     try {
       await firstValueFrom(
         this.httpClient.delete(`${this.BASE_URL}/todo/${list.id}`, {
-          headers: this.headers,
+          headers: this.getHeaders(),
         })
       );
       await this.RefreshTodoLists();
     } catch (err) {
       console.log(err);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  async ShareTodoList(list: TodoList, email: string) {
+    this.isLoading.set(true);
+    try {
+      let res = await firstValueFrom(
+        this.httpClient.post(
+          `${this.BASE_URL}/todo/${list.id}/share`,
+          { email },
+          {
+            headers: this.getHeaders(),
+          }
+        )
+      );
+
+      return res;
+    } catch (err) {
+      console.log(err);
+      throw err;
     } finally {
       this.isLoading.set(false);
     }

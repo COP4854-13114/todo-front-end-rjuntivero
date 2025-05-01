@@ -63,13 +63,11 @@ export class TodolistModuleComponent {
   });
   isSharedWithUser = computed(() => {
     const todo = this.todoListSignal();
-    const userEmail = this.authSvc.UserSignal()?.email;
+    const user = this.authSvc.UserSignal();
 
-    if (!todo || !userEmail) return false;
+    if (!todo || !user) return false;
 
-    return (todo.shared_with ?? []).some(
-      (sharedUser) => sharedUser.email === userEmail
-    );
+    return !todo.public_list && todo.created_by !== user.id;
   });
 
   openDialog(type: 'add-item' | 'delete-list' | 'share-list') {

@@ -16,11 +16,6 @@ export class TodoListItemsService {
   headers = new HttpHeaders();
 
   constructor(private httpClient: HttpClient, private todosSvc: TodosService) {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      this.headers = this.headers.append('Authorization', `Bearer ${token}`);
-    }
-
     effect(() => {
       const selectedList = this.todosSvc.SelectedTodoList();
 
@@ -32,13 +27,23 @@ export class TodoListItemsService {
     });
   }
 
+  getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('authToken');
+
+    if (!token) return new HttpHeaders();
+
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+  }
+
   async RefreshTodoListItems(todoListId: number) {
     try {
       const res = await firstValueFrom(
         this.httpClient.get<TodoListItem[]>(
           `${this.BASE_URL}/todo/${todoListId}/items`,
           {
-            headers: this.headers,
+            headers: this.getHeaders(),
           }
         )
       );
@@ -49,9 +54,11 @@ export class TodoListItemsService {
           todo_list_id: todoListId,
         }))
       );
+      return;
     } catch (err) {
       console.log(err);
       this.TodoListItemsSignal.set(null);
+      return err;
     }
   }
 
@@ -59,7 +66,7 @@ export class TodoListItemsService {
     try {
       let res = await firstValueFrom(
         this.httpClient.post(`${this.BASE_URL}/todo/${todoListId}/item`, item, {
-          headers: this.headers,
+          headers: this.getHeaders(),
         })
       );
 
@@ -67,7 +74,7 @@ export class TodoListItemsService {
       return res;
     } catch (err) {
       console.log(err);
-      return null;
+      return err;
     }
   }
 
@@ -82,14 +89,14 @@ export class TodoListItemsService {
           `${this.BASE_URL}/todo/${list_id}/item/${itemId}`,
           updatedItem,
           {
-            headers: this.headers,
+            headers: this.getHeaders(),
           }
         )
       );
       return res;
     } catch (err) {
       console.log(err);
-      return null;
+      return err;
     }
   }
 
@@ -99,14 +106,16 @@ export class TodoListItemsService {
         this.httpClient.delete(
           `${this.BASE_URL}/todo/${todoListId}/item/${itemId}`,
           {
-            headers: this.headers,
+            headers: this.getHeaders(),
           }
         )
       );
 
       this.RefreshTodoListItems(todoListId);
+      return;
     } catch (err) {
       console.log(err);
+      return err;
     }
   }
 }

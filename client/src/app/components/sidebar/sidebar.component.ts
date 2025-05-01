@@ -37,7 +37,7 @@ export class SidebarComponent {
       }
 
       if (option === 'Shared')
-        return !todo.public_list && todo.shared_with?.length > 0;
+        return !todo.public_list && user && todo.created_by !== user.id;
 
       return true;
     });

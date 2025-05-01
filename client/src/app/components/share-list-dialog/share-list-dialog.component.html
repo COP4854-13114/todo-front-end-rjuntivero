@@ -1,1 +1,24 @@
-<p>share-list-dialog works!</p>
+<div class="wrapper">
+  <button (click)="close()" class="closeButton">X</button>
+  <main class="main-content">
+    <h1>Share List</h1>
+
+    <form (ngSubmit)="handleSubmit()">
+      <!-- Email Input (Required) -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Email to Share</mat-label>
+        <input [formControl]="emailFormControl" type="email" matInput />
+        @if (emailFormControl.hasError('required')) {
+        <mat-error>Email is <strong>required</strong></mat-error>
+        } @if (emailFormControl.hasError('email')) {
+        <mat-error>Enter a <strong>valid email</strong></mat-error>
+        } @if (emailFormControl.hasError('backend')) {
+        <mat-error>{{ emailFormControl.getError("backend") }}</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Share Button -->
+      <button type="submit" [disabled]="emailFormControl.invalid">Share</button>
+    </form>
+  </main>
+</div>
