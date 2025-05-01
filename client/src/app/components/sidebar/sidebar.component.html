@@ -1,8 +1,14 @@
 <aside class="sidebar">
   <div class="actions">
-    <button mat-raised-button>Public</button>
-    <button mat-raised-button>My Lists</button>
-    <button mat-raised-button>Shared With Me</button>
+    @for (option of this.options; track $index) {
+    <button
+      mat-raised-button
+      [ngClass]="{ selected: selectedOption() === $index }"
+      (click)="toggleOption($index)"
+    >
+      {{ option }}
+    </button>
+    }
   </div>
   <div class="todolists">
     <ul>

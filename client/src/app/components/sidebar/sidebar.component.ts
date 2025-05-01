@@ -1,18 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { TodoList } from '../../models/TodoList.model';
 import { TodolistTabComponent } from '../todolist-tab/todolist-tab.component';
 import { TodosService } from '../../services/todos.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [FormsModule, TodolistTabComponent],
+  imports: [CommonModule, FormsModule, TodolistTabComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
   constructor(public todoSvc: TodosService, private http: HttpClient) {}
+
+  options = ['Public', 'Owned', 'Shared'];
+  selectedOption = signal<number>(0);
+
+  toggleOption(index: number) {
+    this.selectedOption.set(index);
+  }
 
   AddTodoList(newTodoList: TodoList) {
     this.todoSvc.AddTodoList();

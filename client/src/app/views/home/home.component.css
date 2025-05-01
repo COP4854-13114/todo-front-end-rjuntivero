@@ -5,6 +5,10 @@
   flex-direction: column;
 }
 
+:host ::ng-deep mat-spinner circle {
+  stroke: var(--trim-color);
+}
+
 .loading {
   display: flex;
   justify-content: center;

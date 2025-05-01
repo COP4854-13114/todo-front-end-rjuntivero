@@ -44,5 +44,13 @@ button:hover {
   background-color: var(--secondary-color);
   color: white;
   transform: scale(1.1);
-  transition: background-color 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.selected {
+  background-color: var(--secondary-color);
+  filter: brightness(1.2);
+  transform: scale(1.1);
+  color: white;
+  transition: all 0.2s ease-in-out;
 }
