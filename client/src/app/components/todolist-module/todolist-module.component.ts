@@ -21,6 +21,7 @@ import { DeleteTodoListDialogComponent } from '../delete-todo-list-dialog/delete
 import { ComponentType } from '@angular/cdk/overlay';
 import { AddListItemDialogComponent } from '../add-list-item-dialog/add-list-item-dialog.component';
 import { ShareListDialogComponent } from '../share-list-dialog/share-list-dialog.component';
+import { TodoListItemsService } from '../../services/todolistitems.service';
 
 @Component({
   selector: 'app-todolist-module',
@@ -36,7 +37,11 @@ import { ShareListDialogComponent } from '../share-list-dialog/share-list-dialog
   styleUrl: './todolist-module.component.css',
 })
 export class TodolistModuleComponent {
-  constructor(public authSvc: AuthService, private dialog: MatDialog) {}
+  constructor(
+    public authSvc: AuthService,
+    private dialog: MatDialog,
+    private todoListItemsSvc: TodoListItemsService
+  ) {}
 
   todoListSignal = signal<TodoList | null>(null);
 
@@ -44,8 +49,16 @@ export class TodolistModuleComponent {
     this.todoListSignal.set(value);
   }
 
-  TodoListItems: TodoListItem[] = [];
+  get TodoListItemsSignal() {
+    return this.todoListItemsSvc.TodoListItemsSignal;
+  }
+  readonly visibleItems = computed(() => this.TodoListItemsSignal() ?? []);
 
+  readonly isReady = computed(() => {
+    return (
+      this.todoListSignal() !== null && this.TodoListItemsSignal() !== null
+    );
+  });
   isSharedWithUser = computed(() => {
     const todo = this.todoListSignal();
     const userEmail = this.authSvc.UserSignal()?.email;
@@ -97,10 +110,4 @@ export class TodolistModuleComponent {
 
     return false;
   });
-
-  ngOnInit() {
-    if (this.todoListSignal()?.list_items) {
-      this.TodoListItems = this.todoListSignal()!.list_items;
-    }
-  }
 }

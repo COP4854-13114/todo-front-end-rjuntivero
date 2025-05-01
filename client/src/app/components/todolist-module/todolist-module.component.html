@@ -1,3 +1,4 @@
+@if (isReady()) {
 <mat-card appearance="outlined">
   <mat-card-content
     ><div class="heading">
@@ -40,7 +41,7 @@
       </h3>
     </div>
     <div class="list_items">
-      @for (item of todoListSignal()!.list_items; track item.id) {
+      @for (item of visibleItems(); track item.id) {
       <mat-checkbox
         class="example-margin"
         [disabled]="isDisabled()"
@@ -53,3 +54,5 @@
     </div>
   </mat-card-content>
 </mat-card>
+
+}
