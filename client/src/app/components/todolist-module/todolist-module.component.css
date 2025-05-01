@@ -1,6 +1,6 @@
 mat-card {
-  border-radius: 20px;
-  cursor: pointer;
+  border-radius: var(--sm);
+  padding: var(--md);
 }
 
 .list_items {

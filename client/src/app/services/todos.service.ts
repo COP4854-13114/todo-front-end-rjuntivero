@@ -11,6 +11,7 @@ export class TodosService {
   BASE_URL = 'https://unfspring2025wfa3.azurewebsites.net';
   TodoListsSignal = signal<TodoList[] | null>([]);
   SelectedTodoList = signal<TodoList | null>(null);
+  isLoading = signal(false);
 
   constructor(
     private httpClient: HttpClient,
@@ -31,6 +32,7 @@ export class TodosService {
   }
 
   async GetTodoList(selectedTodoListID: number) {
+    this.isLoading.set(true);
     try {
       let result = await firstValueFrom(
         this.httpClient.get<TodoList>(
@@ -41,10 +43,13 @@ export class TodosService {
     } catch (err) {
       console.log(err);
       return null;
+    } finally {
+      this.isLoading.set(false);
     }
   }
 
   AddTodoList(): void {
+    this.isLoading.set(true);
     const newTodoList = {
       title: 'jajklsd',
       public_list: true,
@@ -64,5 +69,6 @@ export class TodosService {
       .subscribe((response: any) => {
         console.log('Todo List created:', response);
       });
+    this.isLoading.set(false);
   }
 }

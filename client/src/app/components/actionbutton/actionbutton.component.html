@@ -1,4 +1,7 @@
 <mat-toolbar>
+  <span>TodoList</span>
+  <span class="example-spacer"></span>
+  <button mat-raised-button (click)="openLoginDialog()">Login</button>
   <button
     mat-icon-button
     class="example-icon"
@@ -6,18 +9,11 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
-  <span>TodoList</span>
-  <span class="example-spacer"></span>
-  <button
-    class="example-icon favorite-icon"
-    aria-label="Example icon-button with heart icon"
-  >
-    <h1>Login</h1>
-    <!-- mat-icon-button -->
-    <!-- <mat-icon>favorite</mat-icon> -->
-  </button>
-  <!-- <button class="example-icon" aria-label="Example icon-button with share icon">
+</mat-toolbar>
+
+<!-- mat-icon-button -->
+<!-- <mat-icon>favorite</mat-icon> -->
+<!-- <button class="example-icon" aria-label="Example icon-button with share icon">
     <h1>Login</h1>
     <mat-icon>share</mat-icon>
   </button> -->
-</mat-toolbar>

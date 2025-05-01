@@ -1,0 +1,5 @@
+.wrapper {
+  padding: var(--med-padding);
+  display: flex;
+  flex: 1;
+}

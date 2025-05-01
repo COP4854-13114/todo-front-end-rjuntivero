@@ -1,9 +1,15 @@
-<main class="">
-  @if (this.todoSvc.SelectedTodoList()) {
-  <app-todolist-module
-    [TodoList]="this.todoSvc.SelectedTodoList()!"
-  ></app-todolist-module
-  >} @else {
-  <h1>No Todo Lists</h1>
-  }
-</main>
+<div class="wrapper">
+  <main>
+    @if (todoSvc.isLoading()) {
+    <div class="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    } @else { @if (todoSvc.SelectedTodoList()) {
+    <app-todolist-module
+      [TodoList]="todoSvc.SelectedTodoList()!"
+    ></app-todolist-module>
+    } @else {
+    <h1>No Todo Lists</h1>
+    } }
+  </main>
+</div>

@@ -1,0 +1,62 @@
+<div class="wrapper">
+  <button (click)="close()" class="closeButton">X</button>
+  <main class="main-content">
+    @if (isRegisterMode()) {
+    <h1>Register</h1>
+
+    } @else {
+    <h1>Login</h1>
+
+    }
+    <form class="example-form" (ngSubmit)="handleSubmit()">
+      @if (isRegisterMode()) {
+      <mat-form-field class="example-full-width">
+        <mat-label>Name</mat-label>
+        <input [formControl]="nameFormControl" type="text" matInput />
+        @if (nameFormControl.hasError('required')) {
+        <mat-error>Name is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+      }
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          [formControl]="emailFormControl"
+          placeholder="Ex. pat@example.com"
+        />
+        @if (emailFormControl.hasError('email') &&
+        !emailFormControl.hasError('required')) {
+        <mat-error>Please enter a valid email address</mat-error>
+        } @if (emailFormControl.hasError('required')) {
+        <mat-error>Email is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input [formControl]="passwordFormControl" type="password" matInput />
+        @if (passwordFormControl.hasError('required')) {
+        <mat-error>Password is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+      <button type="submit">
+        @if (!isRegisterMode()) { Login } @else {Sign Up}
+      </button>
+    </form>
+    <hr />
+    <div class="register">
+      @if (!isRegisterMode()) {
+      <h3>Don't have an account?</h3>
+      <button (click)="toggleMode()">
+        <h4>Sign Up</h4>
+      </button>
+      } @else {
+      <h3>Have an account?</h3>
+      <button (click)="toggleMode()">
+        <h4>Log In</h4>
+      </button>
+      }
+    </div>
+  </main>
+</div>

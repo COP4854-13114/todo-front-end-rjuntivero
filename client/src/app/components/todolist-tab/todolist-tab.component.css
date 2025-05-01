@@ -2,16 +2,11 @@ li {
   cursor: pointer;
   width: 100%;
   padding: var(--md);
-  background: white;
-  border-radius: 20px;
 }
 
 li:hover {
-  cursor: pointer;
-  width: 100%;
-  padding: var(--md);
-  background: lightgray;
-  border-radius: 20px;
+  background: var(--accent-color);
+  transition: all 0.2s ease-in-out;
 }
 
 button {
@@ -20,8 +15,11 @@ button {
   padding: none;
   margin: none;
   cursor: pointer;
+  color: white;
 }
 
 .selected {
-  background-color: grey;
+  background-color: var(--accent-color);
+  filter: brightness(1.4);
+  transition: all 0.2s ease-in-out;
 }

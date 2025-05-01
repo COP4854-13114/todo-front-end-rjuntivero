@@ -5,14 +5,19 @@
   flex-direction: column;
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 main {
   flex: 1;
-  padding: var(--med-padding);
   height: 100%;
   display: flex;
   flex-direction: column;
   row-gap: var(--md);
-  overflow: hidden;
   /* border: 6px solid blue; */
 }
 
@@ -22,6 +27,7 @@ main {
 }
 
 .wrapper {
+  padding: var(--med-padding);
   display: flex;
   flex: 1;
 }

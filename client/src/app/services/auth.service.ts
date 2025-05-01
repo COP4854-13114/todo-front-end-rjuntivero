@@ -7,24 +7,29 @@ import { Token } from '../models/Token.model';
   providedIn: 'root',
 })
 export class AuthService {
+  BASE_URL = 'https://unfspring2025wfa3.azurewebsites.net';
   TokenSignal = signal<string | null>(null);
+  isLoading = signal(false);
 
   constructor(private httpClient: HttpClient) {}
 
   async Login(username: string, password: string) {
+    this.isLoading.set(true);
     let basicAuth = 'Basic ' + btoa(`${username}:${password}`);
     try {
       let result = await firstValueFrom(
-        this.httpClient.post<Token>('http://localhost:3000/user/login', null, {
+        this.httpClient.post<Token>(`${this.BASE_URL}/user/login`, null, {
           headers: { Authorization: basicAuth },
         })
       );
-      localStorage.setItem('authToken', JSON.stringify(result));
+      localStorage.setItem('authToken', result.token);
       this.TokenSignal.set(result.token);
       return true;
     } catch (err) {
       console.log(err);
       return false;
+    } finally {
+      this.isLoading.set(false);
     }
   }
 
