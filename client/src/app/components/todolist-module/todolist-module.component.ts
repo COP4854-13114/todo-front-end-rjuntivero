@@ -22,6 +22,7 @@ import { ComponentType } from '@angular/cdk/overlay';
 import { AddListItemDialogComponent } from '../add-list-item-dialog/add-list-item-dialog.component';
 import { ShareListDialogComponent } from '../share-list-dialog/share-list-dialog.component';
 import { TodoListItemsService } from '../../services/todolistitems.service';
+import { TodolistItemComponent } from '../todolist-item/todolist-item.component';
 
 @Component({
   selector: 'app-todolist-module',
@@ -32,6 +33,7 @@ import { TodoListItemsService } from '../../services/todolistitems.service';
     MatCardModule,
     MatCheckboxModule,
     MatTooltipModule,
+    TodolistItemComponent,
   ],
   templateUrl: './todolist-module.component.html',
   styleUrl: './todolist-module.component.css',

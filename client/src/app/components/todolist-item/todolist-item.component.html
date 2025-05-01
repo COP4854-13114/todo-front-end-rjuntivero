@@ -1,0 +1,17 @@
+<div class="wrapper">
+  <mat-checkbox
+    [disabled]="disabled"
+    [(ngModel)]="item.completed"
+    (change)="toggleCompleted($event.checked)"
+  >
+    {{ item.task }}
+  </mat-checkbox>
+
+  @if(this.authSvc.isLoggedIn() && this.authSvc.UserSignal()?.id ===
+  this.todoSvc.SelectedTodoList()!.created_by) {
+  <button (click)="deleteItem()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  }
+</div>

@@ -4,6 +4,7 @@ import { TodoListItem } from '../models/TodoListItem.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TodosService } from './todos.service';
 import { TodoListItem_in } from '../models/TodoListItem_in.model';
+import { TodoListItem_Patch } from '../models/TodoListItem_Patch.model';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,7 @@ export class TodoListItemsService {
 
   async RefreshTodoListItems(todoListId: number) {
     try {
-      const result = await firstValueFrom(
+      const res = await firstValueFrom(
         this.httpClient.get<TodoListItem[]>(
           `${this.BASE_URL}/todo/${todoListId}/items`,
           {
@@ -42,7 +43,12 @@ export class TodoListItemsService {
         )
       );
 
-      this.TodoListItemsSignal.set(result);
+      this.TodoListItemsSignal.set(
+        res.map((item) => ({
+          ...item,
+          todo_list_id: todoListId,
+        }))
+      );
     } catch (err) {
       console.log(err);
       this.TodoListItemsSignal.set(null);
@@ -65,17 +71,42 @@ export class TodoListItemsService {
     }
   }
 
-  // async DeleteTodoListItem(todoListId: number, itemId: number) {
-  //   try {
-  //     await firstValueFrom(
-  //       this.httpClient.delete(`${this.BASE_URL}/todo/${todoListId}/items/${itemId}`, {
-  //         headers: this.headers,
-  //       })
-  //     );
+  async UpdateTodoListItem(
+    list_id: number,
+    itemId: number,
+    updatedItem: TodoListItem_Patch
+  ) {
+    try {
+      let res = await firstValueFrom(
+        this.httpClient.patch(
+          `${this.BASE_URL}/todo/${list_id}/item/${itemId}`,
+          updatedItem,
+          {
+            headers: this.headers,
+          }
+        )
+      );
+      return res;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
 
-  //     this.RefreshTodoListItems(todoListId);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
+  async DeleteTodoListItem(todoListId: number, itemId: number) {
+    try {
+      await firstValueFrom(
+        this.httpClient.delete(
+          `${this.BASE_URL}/todo/${todoListId}/item/${itemId}`,
+          {
+            headers: this.headers,
+          }
+        )
+      );
+
+      this.RefreshTodoListItems(todoListId);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }

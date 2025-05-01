@@ -46,3 +46,7 @@ mat-icon {
   height: fit-content;
   display: inline-block;
 }
+
+app-todolist-item:not(:last-child) {
+  border-bottom: 1px solid var(--secondary-color);
+}

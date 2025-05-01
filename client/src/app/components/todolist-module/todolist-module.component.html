@@ -42,13 +42,10 @@
     </div>
     <div class="list_items">
       @for (item of visibleItems(); track item.id) {
-      <mat-checkbox
-        class="example-margin"
+      <app-todolist-item
+        [item]="item"
         [disabled]="isDisabled()"
-        [checked]="item.completed"
-      >
-        <p>{{ item.task }}</p></mat-checkbox
-      >
+      ></app-todolist-item>
 
       }
     </div>
