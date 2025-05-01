@@ -2,3 +2,9 @@ mat-card {
   border-radius: 20px;
   cursor: pointer;
 }
+
+.list_items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--md);
+}

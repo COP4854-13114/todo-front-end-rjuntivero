@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { TodoList } from '../../models/TodoList.model';
 import { TodolistTabComponent } from '../todolist-tab/todolist-tab.component';
+import { TodosService } from '../../services/todos.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,22 +12,11 @@ import { TodolistTabComponent } from '../todolist-tab/todolist-tab.component';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
-  constructor(private http: HttpClient) {}
-  publicTodoLists: TodoList[] = [];
-  ownedTodoLists: TodoList[] = [];
-  sharedTodoLists: TodoList[] = [];
-  visibleTodoLists: TodoList[] = [];
-  token: string | null = localStorage.getItem('authToken');
-  currentUserId: number | undefined = localStorage.getItem('current_user')
-    ? parseInt(localStorage.getItem('current_user')!)
-    : undefined;
+  constructor(public todoSvc: TodosService, private http: HttpClient) {}
 
-  newTodoListTitle: string = '';
-  email: string = '';
-  password: string = '';
-  loginEmail: string = '';
-  loginPassword: string = '';
-
+  AddTodoList(newTodoList: TodoList) {
+    this.todoSvc.AddTodoList();
+  }
   ngOnInit(): void {
     // let headers = new HttpHeaders();
     // // localStorage.clear();

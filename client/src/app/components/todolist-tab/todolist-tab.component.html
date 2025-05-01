@@ -1,1 +1,8 @@
-<li>This is a todoList Item</li>
+<li
+  (click)="SelectTodoList(TodoList)"
+  [ngClass]="{ selected: TodoList.id === this.todoSvc.SelectedTodoList()?.id }"
+>
+  <button>
+    {{ TodoList.title }}
+  </button>
+</li>

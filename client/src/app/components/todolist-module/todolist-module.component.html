@@ -1,3 +1,14 @@
 <mat-card appearance="outlined">
-  <mat-card-content>Simple card</mat-card-content>
+  <mat-card-content
+    ><h1>{{ TodoList.title }}</h1>
+    <h3>Created on: {{ TodoList.created_at }}</h3>
+    <div class="list_items">
+      @for (item of TodoList.list_items; track item.id) {
+      <mat-checkbox class="example-margin">
+        <p>{{ item.task }}</p></mat-checkbox
+      >
+
+      }
+    </div>
+  </mat-card-content>
 </mat-card>

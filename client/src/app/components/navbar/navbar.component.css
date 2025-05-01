@@ -1,11 +1,18 @@
 nav {
   display: flex;
+  justify-content: end;
   align-items: center;
   padding-inline: var(--md);
   height: 100%;
+  gap: var(--md);
 }
 
 nav h1 {
   text-align: end;
   width: 100%;
+}
+
+.actions {
+  background-color: transparent;
+  border: 1px solid red;
 }

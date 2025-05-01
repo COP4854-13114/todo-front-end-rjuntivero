@@ -1,0 +1,21 @@
+mat-toolbar {
+  background: none;
+  min-width: fit-content;
+  border: solid 1px red;
+  display: flex;
+  gap: var(--md);
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  padding: var(--sm);
+  margin: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: lightgray;
+  border-radius: 20px;
+  transition: background-color 0.2s ease-in-out;
+}

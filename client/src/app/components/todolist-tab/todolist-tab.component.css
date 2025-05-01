@@ -1,6 +1,27 @@
 li {
   cursor: pointer;
   width: 100%;
-  padding: var(--sm);
-  background-color: red;
+  padding: var(--md);
+  background: white;
+  border-radius: 20px;
+}
+
+li:hover {
+  cursor: pointer;
+  width: 100%;
+  padding: var(--md);
+  background: lightgray;
+  border-radius: 20px;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  padding: none;
+  margin: none;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: grey;
 }

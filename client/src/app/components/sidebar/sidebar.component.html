@@ -1,18 +1,18 @@
 <aside class="sidebar">
-  <div class="">
-    <ul></ul>
+  <div class="actions">
+    <button>Public</button>
+    <button>My Lists</button>
+    <button>Shared With Me</button>
+  </div>
+  <div class="todolists">
     <ul>
-      <!-- @for (todolists of visibleTodoLists; track todolists.id) {
+      @for (todolist of todoSvc.TodoListsSignal(); track todolist.id) {
       <li>
-        <app-todolist-tab>{{ todolists }}</app-todolist-tab>
+        <app-todolist-tab [TodoList]="todolist">{{
+          todolist
+        }}</app-todolist-tab>
       </li>
-      } -->
-      <app-todolist-tab></app-todolist-tab>
-      <app-todolist-tab></app-todolist-tab>
-      <app-todolist-tab></app-todolist-tab>
-      <app-todolist-tab></app-todolist-tab>
-      <app-todolist-tab></app-todolist-tab>
-      <app-todolist-tab></app-todolist-tab>
+      }
     </ul>
   </div>
 </aside>

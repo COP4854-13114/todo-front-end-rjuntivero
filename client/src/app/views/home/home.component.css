@@ -1,6 +1,7 @@
 :host {
   display: flex;
   flex: 1;
+  height: 100vh;
   flex-direction: column;
 }
 
@@ -11,6 +12,8 @@ main {
   display: flex;
   flex-direction: column;
   row-gap: var(--md);
+  overflow: hidden;
+  /* border: 6px solid blue; */
 }
 
 .main-content {

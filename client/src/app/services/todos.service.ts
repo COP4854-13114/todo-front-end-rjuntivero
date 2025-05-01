@@ -2,22 +2,49 @@ import { Injectable, signal } from '@angular/core';
 import { TodoList } from '../models/TodoList.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
+import { firstValueFrom, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class TodosService {
-  BASE_URL = 'http://localhost:3000';
+  // BASE_URL = 'http://localhost:3000';
+  BASE_URL = 'https://unfspring2025wfa3.azurewebsites.net';
   TodoListsSignal = signal<TodoList[] | null>([]);
+  SelectedTodoList = signal<TodoList | null>(null);
+
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService
-  ) {}
+  ) {
+    const todoLists = this.GetTodoLists().subscribe((todoLists: TodoList[]) => {
+      this.TodoListsSignal.set(todoLists);
+      if (todoLists.length > 0) {
+        this.SelectedTodoList.set(todoLists[0]);
+      }
+    });
 
-  getTodoLists() {
-    return this.httpClient.get<TodoList[]>(`${this.BASE_URL}/todos`);
+    console.log(todoLists);
   }
 
-  addTodoList(): void {
+  GetTodoLists() {
+    return this.httpClient.get<TodoList[]>(`${this.BASE_URL}/todo`);
+  }
+
+  async GetTodoList(selectedTodoListID: number) {
+    try {
+      let result = await firstValueFrom(
+        this.httpClient.get<TodoList>(
+          `${this.BASE_URL}/todo/${selectedTodoListID}`
+        )
+      );
+      return result;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+
+  AddTodoList(): void {
     const newTodoList = {
       title: 'jajklsd',
       public_list: true,
@@ -33,7 +60,7 @@ export class TodosService {
     }
 
     this.httpClient
-      .post<TodoList>(' http://localhost:3000/todo', newTodoList, { headers })
+      .post<TodoList>(`${this.BASE_URL}/todo`, newTodoList, { headers })
       .subscribe((response: any) => {
         console.log('Todo List created:', response);
       });

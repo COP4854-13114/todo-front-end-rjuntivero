@@ -1,9 +1,9 @@
-<div class="wrapper">
-  <main class="">
-    <app-todolist-module></app-todolist-module>
-    <app-todolist-module></app-todolist-module>
-    <app-todolist-module></app-todolist-module>
-    <app-todolist-module></app-todolist-module>
-    <app-todolist-module></app-todolist-module>
-  </main>
-</div>
+<main class="">
+  @if (this.todoSvc.SelectedTodoList()) {
+  <app-todolist-module
+    [TodoList]="this.todoSvc.SelectedTodoList()!"
+  ></app-todolist-module
+  >} @else {
+  <h1>No Todo Lists</h1>
+  }
+</main>
