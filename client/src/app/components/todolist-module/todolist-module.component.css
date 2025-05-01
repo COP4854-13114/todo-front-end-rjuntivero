@@ -3,8 +3,19 @@ mat-card {
   padding: var(--md);
 }
 
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--md);
+}
+
 .list_items {
   display: flex;
   flex-direction: column;
   gap: var(--md);
+}
+
+h3 {
+  font-weight: 300;
+  color: var(--secondary-color);
 }

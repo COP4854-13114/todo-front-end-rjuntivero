@@ -1,6 +1,6 @@
 nav {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
   padding-inline: var(--md);
   height: 100%;

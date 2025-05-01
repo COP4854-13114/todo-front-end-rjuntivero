@@ -34,10 +34,6 @@
     background-color: var(--main-color);
     border-radius: 4px;
   }
-
-  ::-webkit-scrollbar-track {
-    background-color: var(--background-color);
-  }
 }
 
 h1,

@@ -1,7 +1,11 @@
 <mat-toolbar>
   <span>TodoList</span>
   <span class="example-spacer"></span>
+  @if (!this.authSvc.isLoggedIn()) {
   <button mat-raised-button (click)="openLoginDialog()">Login</button>
+  } @else {
+  <button mat-raised-button (click)="this.authSvc.Logout()">Logout</button>
+  }
   <button
     mat-icon-button
     class="example-icon"

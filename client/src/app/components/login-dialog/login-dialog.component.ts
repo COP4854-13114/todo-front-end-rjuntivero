@@ -60,7 +60,14 @@ export class LoginDialogComponent {
       return;
     }
     try {
-    } catch (err) {}
+      this.authSvc.Register(
+        this.nameFormControl.value!,
+        this.emailFormControl.value!,
+        this.passwordFormControl.value!
+      );
+    } catch (err) {
+      console.error('Registration error:', err);
+    }
   }
 
   async Login() {

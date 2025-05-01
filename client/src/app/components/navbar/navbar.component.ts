@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActionbuttonComponent } from '../actionbutton/actionbutton.component';
+import { TodosService } from '../../services/todos.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,4 +8,6 @@ import { ActionbuttonComponent } from '../actionbutton/actionbutton.component';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  constructor(public todoSvc: TodosService) {}
+}
