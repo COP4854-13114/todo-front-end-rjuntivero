@@ -17,7 +17,10 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { TodoListDialogComponent } from '../todo-list-dialog/todo-list-dialog.component';
+import { DeleteTodoListDialogComponent } from '../delete-todo-list-dialog/delete-todo-list-dialog.component';
+import { ComponentType } from '@angular/cdk/overlay';
+import { AddListItemDialogComponent } from '../add-list-item-dialog/add-list-item-dialog.component';
+import { ShareListDialogComponent } from '../share-list-dialog/share-list-dialog.component';
 
 @Component({
   selector: 'app-todolist-module',
@@ -54,11 +57,29 @@ export class TodolistModuleComponent {
     );
   });
 
-  openDialog() {
-    const dialogRef = this.dialog.open(TodoListDialogComponent);
+  openDialog(type: 'add-item' | 'delete-list' | 'share-list') {
+    let component: ComponentType<any> | undefined;
+    if (type === 'add-item') {
+      component = AddListItemDialogComponent;
+    } else if (type === 'delete-list') {
+      component = DeleteTodoListDialogComponent;
+    } else if (type === 'share-list') {
+      component = ShareListDialogComponent;
+    } else {
+      return;
+    }
+    if (!component) return;
+
+    const data = {
+      todoList: this.todoListSignal(),
+    };
+
+    const dialogRef = this.dialog.open(component, {
+      data,
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('Login dialog closed with:', result);
+      console.log(`${type} dialog closed with:`, result);
     });
   }
 

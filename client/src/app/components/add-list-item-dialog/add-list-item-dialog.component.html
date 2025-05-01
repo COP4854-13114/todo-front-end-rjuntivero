@@ -1,0 +1,34 @@
+<div class="wrapper">
+  <button (click)="close()" class="closeButton">X</button>
+  <main class="main-content">
+    <h1>Create New Todo Item</h1>
+
+    <form (ngSubmit)="handleSubmit()">
+      <!-- Task Input (Required) -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Task</mat-label>
+        <input [formControl]="taskFormControl" type="text" matInput />
+        @if (taskFormControl.hasError('required')) {
+        <mat-error>Task is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Due Date Picker (Optional) -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Due Date (Optional)</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [formControl]="dueDateFormControl"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="taskFormControl.invalid">
+        Create Todo Item
+      </button>
+    </form>
+  </main>
+</div>

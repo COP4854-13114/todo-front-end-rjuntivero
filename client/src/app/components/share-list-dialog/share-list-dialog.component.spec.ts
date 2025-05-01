@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TodoListDialogComponent } from './todo-list-dialog.component';
+import { ShareListDialogComponent } from './share-list-dialog.component';
 
-describe('TodoListDialogComponent', () => {
-  let component: TodoListDialogComponent;
-  let fixture: ComponentFixture<TodoListDialogComponent>;
+describe('ShareListDialogComponent', () => {
+  let component: ShareListDialogComponent;
+  let fixture: ComponentFixture<ShareListDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TodoListDialogComponent]
+      imports: [ShareListDialogComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TodoListDialogComponent);
+    fixture = TestBed.createComponent(ShareListDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -10,7 +10,6 @@ import { TodoList_in } from '../models/TodoList_in.model';
   providedIn: 'root',
 })
 export class TodosService {
-  // BASE_URL = 'http://localhost:3000';
   BASE_URL = 'https://unfspring2025wfa3.azurewebsites.net';
 
   TodoListsSignal = signal<TodoList[] | null>([]);
@@ -22,24 +21,44 @@ export class TodosService {
   constructor(private httpClient: HttpClient, private authSvc: AuthService) {
     effect(() => {
       const token = this.authSvc.TokenSignal();
+      const view = this.ListViewSignal();
 
-      this.GetTodoLists();
+      this.RefreshTodoLists();
     });
 
     const token = localStorage.getItem('authToken');
     if (token) {
-      console.log('Token:', token);
       this.headers = this.headers.append('Authorization', `Bearer ${token}`);
     }
+  }
 
-    this.GetTodoLists().then((todoLists) => {
-      if (todoLists) {
-        this.TodoListsSignal.set(todoLists);
-        if (todoLists.length > 0) {
-          this.SelectedTodoList.set(todoLists[0]);
-        }
-      }
+  filterTodoLists(
+    todos: TodoList[],
+    view: string,
+    user: User | null
+  ): TodoList[] {
+    return todos.filter((todo) => {
+      if (view === 'Public') return todo.public_list;
+      if (view === 'Owned') return user && todo.created_by === user.id;
+      if (view === 'Shared')
+        return !todo.public_list && todo.shared_with?.length > 0;
+      return true;
     });
+  }
+
+  async RefreshTodoLists() {
+    const todoLists = await this.GetTodoLists();
+    this.TodoListsSignal.set(todoLists);
+
+    const option = ['Public', 'Owned', 'Shared'][this.ListViewSignal()];
+    const user = this.authSvc.UserSignal();
+    const filtered = this.filterTodoLists(todoLists ?? [], option, user);
+
+    if (filtered.length > 0) {
+      this.SelectedTodoList.set(filtered[0]);
+    } else {
+      this.SelectedTodoList.set(null);
+    }
   }
 
   async GetTodoLists() {
@@ -50,12 +69,10 @@ export class TodosService {
           headers: this.headers,
         })
       );
-      const normalized = result.map((todo) => ({
+      return result.map((todo) => ({
         ...todo,
         shared_with: todo.shared_with ?? [],
       }));
-
-      return normalized;
     } catch (err) {
       console.log(err);
       return null;
@@ -84,27 +101,35 @@ export class TodosService {
 
   async AddTodoList(list: TodoList_in) {
     this.isLoading.set(true);
-    const newTodoList = {
-      title: list.title,
-      public_list: list.public_list,
-    };
-
     try {
-      let res = await firstValueFrom(
-        this.httpClient.post<TodoList>(`${this.BASE_URL}/todo`, newTodoList, {
+      const res = await firstValueFrom(
+        this.httpClient.post<TodoList>(`${this.BASE_URL}/todo`, list, {
           headers: this.headers,
         })
       );
-      this.GetTodoLists().then((todoLists) => {
-        this.TodoListsSignal.set(todoLists);
-      });
+      await this.RefreshTodoLists();
       return res;
     } catch (err) {
       console.log(err);
       return null;
     } finally {
       this.isLoading.set(false);
-      return;
+    }
+  }
+
+  async DeleteTodoList(list: TodoList) {
+    this.isLoading.set(true);
+    try {
+      await firstValueFrom(
+        this.httpClient.delete(`${this.BASE_URL}/todo/${list.id}`, {
+          headers: this.headers,
+        })
+      );
+      await this.RefreshTodoLists();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      this.isLoading.set(false);
     }
   }
 }

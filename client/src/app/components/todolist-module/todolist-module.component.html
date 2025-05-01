@@ -11,20 +11,24 @@
           <!-- Owned List -->
           @if (todoListSignal()!.created_by === this.authSvc.UserSignal()?.id) {
           <mat-icon matTooltip="My list">person</mat-icon>
-          <button (click)="openDialog()">
+          <button (click)="openDialog('add-item')">
             <mat-icon matTooltip="Add List Item">add_circle</mat-icon>
           </button>
           <button>
-            <mat-icon matTooltip="Delete List">delete</mat-icon>
+            <mat-icon
+              matTooltip="Delete List"
+              (click)="openDialog('delete-list')"
+              >delete</mat-icon
+            >
           </button>
-          <button (click)="openDialog()">
+          <button (click)="openDialog('share-list')">
             <mat-icon matTooltip="Share List">ios_share</mat-icon>
           </button>
           }
 
           <!-- Shared With Me -->
           @if (this.isSharedWithUser()) {
-          <button (click)="openDialog()">
+          <button (click)="openDialog('add-item')">
             <mat-icon matTooltip="Add List Item">add_circle</mat-icon>
           </button>
           <mat-icon matTooltip="Shared with me">group</mat-icon>
