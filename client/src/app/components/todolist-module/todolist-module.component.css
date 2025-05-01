@@ -1,6 +1,8 @@
 mat-card {
   border-radius: var(--sm);
   padding: var(--md);
+  border-color: var(--secondary-color);
+  /* box-shadow: var(--shadow-1); */
 }
 
 mat-card-content {
@@ -18,4 +20,29 @@ mat-card-content {
 h3 {
   font-weight: 300;
   color: var(--secondary-color);
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+}
+
+button {
+  padding: var(--sm);
+  background-color: transparent;
+  border: none;
+  border-radius: 20px;
+}
+
+mat-icon {
+  font-size: 2rem;
+  width: fit-content;
+  height: fit-content;
+  display: inline-block;
 }

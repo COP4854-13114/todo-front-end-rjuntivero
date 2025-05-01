@@ -2,8 +2,9 @@ mat-toolbar {
   background: none;
   min-width: fit-content;
   display: flex;
-  gap: var(--md);
+  gap: var(--sm);
   font-family: inherit;
+  align-items: center;
 }
 
 mat-toolbar h1 {
@@ -16,6 +17,12 @@ button {
   padding: var(--sm);
   margin: none;
   cursor: pointer;
+}
+
+.user {
+  display: flex;
+  gap: var(--sm);
+  align-items: center;
 }
 
 a {

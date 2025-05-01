@@ -18,6 +18,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
+import { AddTodoListDialogComponent } from '../add-todo-list-dialog/add-todo-list-dialog.component';
+import { ComponentType } from '@angular/cdk/overlay';
 @Component({
   selector: 'app-actionbutton',
   imports: [MatToolbarModule, MatButtonModule, MatIconModule, RouterModule],
@@ -27,11 +29,17 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 export class ActionbuttonComponent {
   constructor(public authSvc: AuthService, private dialog: MatDialog) {}
 
-  openLoginDialog() {
-    const dialogRef = this.dialog.open(LoginDialogComponent);
+  openDialog(type: 'login' | 'add') {
+    const component: ComponentType<any> =
+      type === 'login' ? LoginDialogComponent : AddTodoListDialogComponent;
+
+    const dialogRef = this.dialog.open(component);
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('Login dialog closed with:', result);
+      console.log(
+        `${type === 'login' ? 'Login' : 'Add Todo List'} dialog closed with:`,
+        result
+      );
     });
   }
 }

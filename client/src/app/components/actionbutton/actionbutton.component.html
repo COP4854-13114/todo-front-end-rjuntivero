@@ -1,23 +1,22 @@
 <mat-toolbar>
-  <span>TodoList</span>
+  @if (this.authSvc.isLoggedIn()) {
+  <div class="user">
+    <mat-icon>person</mat-icon>
+    <h1>{{ this.authSvc.UserSignal()?.name }}</h1>
+  </div>
+  }
   <span class="example-spacer"></span>
   @if (!this.authSvc.isLoggedIn()) {
-  <button mat-raised-button (click)="openLoginDialog()">Login</button>
+  <button mat-raised-button (click)="openDialog('login')">Login</button>
   } @else {
-  <button mat-raised-button (click)="this.authSvc.Logout()">Logout</button>
-  }
   <button
     mat-icon-button
     class="example-icon"
     aria-label="Example icon-button with menu icon"
+    (click)="openDialog('add')"
   >
-    <mat-icon>menu</mat-icon>
+    <mat-icon>post_add</mat-icon>
   </button>
+  <button mat-raised-button (click)="this.authSvc.Logout()">Logout</button>
+  }
 </mat-toolbar>
-
-<!-- mat-icon-button -->
-<!-- <mat-icon>favorite</mat-icon> -->
-<!-- <button class="example-icon" aria-label="Example icon-button with share icon">
-    <h1>Login</h1>
-    <mat-icon>share</mat-icon>
-  </button> -->

@@ -2,6 +2,7 @@ li {
   cursor: pointer;
   width: 100%;
   padding: var(--md);
+  padding-inline: 1rem;
 }
 
 li:hover {
@@ -16,10 +17,22 @@ button {
   margin: none;
   cursor: pointer;
   color: white;
+  width: 100%;
+  text-align: start;
+}
+
+button h2 {
+  font-size: 1.1rem;
+  max-width: 17ch;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 400;
 }
 
 .selected {
   background-color: var(--accent-color);
   filter: brightness(1.4);
   transition: all 0.2s ease-in-out;
+  font-weight: 600;
 }

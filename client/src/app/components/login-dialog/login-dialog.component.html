@@ -40,7 +40,14 @@
         <mat-error>Password is <strong>required</strong></mat-error>
         }
       </mat-form-field>
-      <button type="submit">
+      <button
+        type="submit"
+        [disabled]="
+          passwordFormControl.invalid ||
+          emailFormControl.invalid ||
+          (nameFormControl.invalid && isRegisterMode())
+        "
+      >
         @if (!isRegisterMode()) { Login } @else {Sign Up}
       </button>
     </form>

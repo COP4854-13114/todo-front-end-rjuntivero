@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { firstValueFrom, Observable } from 'rxjs';
 import { User } from '../models/User.model';
+import { TodoList_in } from '../models/TodoList_in.model';
 
 @Injectable({
   providedIn: 'root',
@@ -81,20 +82,29 @@ export class TodosService {
     }
   }
 
-  AddTodoList(): void {
+  async AddTodoList(list: TodoList_in) {
     this.isLoading.set(true);
     const newTodoList = {
-      title: 'jajklsd',
-      public_list: true,
+      title: list.title,
+      public_list: list.public_list,
     };
 
-    this.httpClient
-      .post<TodoList>(`${this.BASE_URL}/todo`, newTodoList, {
-        headers: this.headers,
-      })
-      .subscribe((response: any) => {
-        console.log('Todo List created:', response);
+    try {
+      let res = await firstValueFrom(
+        this.httpClient.post<TodoList>(`${this.BASE_URL}/todo`, newTodoList, {
+          headers: this.headers,
+        })
+      );
+      this.GetTodoLists().then((todoLists) => {
+        this.TodoListsSignal.set(todoLists);
       });
-    this.isLoading.set(false);
+      return res;
+    } catch (err) {
+      console.log(err);
+      return null;
+    } finally {
+      this.isLoading.set(false);
+      return;
+    }
   }
 }

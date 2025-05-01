@@ -47,8 +47,5 @@ export class SidebarComponent {
     this.todoSvc.ListViewSignal.set(index);
   }
 
-  AddTodoList(newTodoList: TodoList) {
-    this.todoSvc.AddTodoList();
-  }
   ngOnInit(): void {}
 }

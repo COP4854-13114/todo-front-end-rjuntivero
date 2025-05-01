@@ -1,7 +1,36 @@
 <mat-card appearance="outlined">
   <mat-card-content
     ><div class="heading">
-      <h1>{{ todoListSignal()!.title }}</h1>
+      <div class="title">
+        <h1>{{ todoListSignal()!.title }}</h1>
+        <div class="right">
+          @if (todoListSignal()!.public_list) {
+          <mat-icon matTooltip="Public list">public</mat-icon>
+          }
+
+          <!-- Owned List -->
+          @if (todoListSignal()!.created_by === this.authSvc.UserSignal()?.id) {
+          <mat-icon matTooltip="My list">person</mat-icon>
+          <button (click)="openDialog()">
+            <mat-icon matTooltip="Add List Item">add_circle</mat-icon>
+          </button>
+          <button>
+            <mat-icon matTooltip="Delete List">delete</mat-icon>
+          </button>
+          <button (click)="openDialog()">
+            <mat-icon matTooltip="Share List">ios_share</mat-icon>
+          </button>
+          }
+
+          <!-- Shared With Me -->
+          @if (this.isSharedWithUser()) {
+          <button (click)="openDialog()">
+            <mat-icon matTooltip="Add List Item">add_circle</mat-icon>
+          </button>
+          <mat-icon matTooltip="Shared with me">group</mat-icon>
+          }
+        </div>
+      </div>
       <h3>
         Created on: {{ todoListSignal()!.created_at | date : "MMMM d, y" }}
       </h3>
