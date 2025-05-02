@@ -1,9 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
+  --mat-sys-body-medium-font: inherit;
+  --mat-sys-body-medium-size: inherit;
+  --mat-sys-body-medium-weight: inherit;
+  --mat-sys-body-large-font: inherit;
+  --mat-sys-body-large-size: inherit;
+  --mat-sys-body-large-weight: inherit;
   --main-color: #2b2d42;
   --accent-color: #ef233c;
   --secondary-color: #8d99ae;
-  --background-color: #edf2f4;
+  --background-color: #f9f9f9;
   --trim-color: #d90429;
   --shadow-1: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   --sm-padding: 12px;
@@ -66,4 +72,20 @@ body {
 button {
   cursor: pointer;
   font-family: inherit;
+}
+
+/* Snackbar Notifs */
+.snackbar-success {
+  background-color: green !important;
+  color: white !important;
+}
+
+.snackbar-error {
+  background-color: red !important;
+  color: white !important;
+}
+
+.snackbar-info {
+  background-color: blue !important;
+  color: white !important;
 }

@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
 import {
   FormControl,
   Validators,
@@ -17,6 +18,7 @@ import { AuthService } from '../../services/auth.service';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    CommonModule,
   ],
   standalone: true,
   templateUrl: './login-dialog.component.html',
@@ -43,15 +45,15 @@ export class LoginDialogComponent {
     this.isRegisterMode.update((value) => !value);
   }
 
-  handleSubmit() {
+  async handleSubmit() {
     if (this.isRegisterMode()) {
-      this.Register();
+      await this.Register();
     } else {
-      this.Login();
+      await this.Login();
     }
   }
 
-  Register() {
+  async Register() {
     if (
       this.emailFormControl.invalid ||
       this.passwordFormControl.invalid ||
@@ -67,6 +69,20 @@ export class LoginDialogComponent {
       );
     } catch (err) {
       console.error('Registration error:', err);
+      const error = err as any;
+      const status = error?.status;
+      const message = error?.error?.message || 'An error occurred';
+
+      if (status === 400) {
+        this.emailFormControl.setErrors({ backend: message });
+      } else if (status === 409) {
+        this.emailFormControl.setErrors({ backend: 'Email already in use' });
+      } else {
+        this.authSvc.showMessage(
+          'Registration failed. Please try again later.',
+          'error'
+        );
+      }
     }
   }
 
@@ -87,7 +103,25 @@ export class LoginDialogComponent {
         console.error('Login failed:');
       }
     } catch (err) {
+      this.authSvc.showMessage(
+        'Login failed. Invalid Username or password.',
+        'error'
+      );
       console.error('Login error:', err);
+      const error = err as any;
+      const status = error?.status;
+      const message = error?.error?.message || 'An error occurred';
+
+      if (status === 400) {
+        this.passwordFormControl.setErrors({ backend: message });
+        this.passwordFormControl.markAsTouched();
+        this.passwordFormControl.updateValueAndValidity();
+      } else if (status === 404) {
+        this.emailFormControl.setErrors({ backend: message });
+        this.emailFormControl.markAsTouched();
+        this.emailFormControl.updateValueAndValidity();
+      } else {
+      }
     }
   }
 }

@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { TodosService } from '../../services/todos.service';
 import { TodoList } from '../../models/TodoList.model';
+import { AuthService } from '../../services/auth.service';
+import { SharedUser } from '../../models/SharedUser.model';
 
 @Component({
   selector: 'share-list-dialog',
@@ -30,8 +32,10 @@ import { TodoList } from '../../models/TodoList.model';
   styleUrl: './share-list-dialog.component.css',
 })
 export class ShareListDialogComponent {
-  constructor(private todoSvc: TodosService) {}
+  constructor(private todoSvc: TodosService, private authSvc: AuthService) {}
   readonly dialogRef = inject(MatDialogRef<ShareListDialogComponent>);
+
+  sharedWithUsers: SharedUser[] = [];
 
   emailFormControl = new FormControl('', [
     Validators.required,
@@ -46,6 +50,17 @@ export class ShareListDialogComponent {
     if (this.emailFormControl.invalid) return;
 
     const email = this.emailFormControl.value as string;
+    const currentUser = this.authSvc.UserSignal();
+    const selectedList = this.todoSvc.SelectedTodoList();
+
+    if (
+      currentUser &&
+      selectedList?.created_by === currentUser.id &&
+      email === currentUser.email
+    ) {
+      this.emailFormControl.setErrors({ backend: 'You own this list' });
+      return;
+    }
 
     try {
       const res = await this.todoSvc.ShareTodoList(
@@ -53,8 +68,13 @@ export class ShareListDialogComponent {
         email
       );
 
-      console.log('Todo List Shared:', res);
-      this.dialogRef.close(email);
+      this.sharedWithUsers.push({ email });
+
+      const updatedList = {
+        ...this.todoSvc.SelectedTodoList()!,
+        shared_with: [...this.sharedWithUsers],
+      };
+      this.todoSvc.SelectedTodoList.set(updatedList);
     } catch (err) {
       console.error(err);
       const error = err as any;
@@ -69,6 +89,14 @@ export class ShareListDialogComponent {
       } else {
         this.emailFormControl.setErrors({ backend: 'Failed to share list' });
       }
+    }
+  }
+
+  ngOnInit() {
+    const todoList = this.todoSvc.SelectedTodoList();
+
+    if (todoList) {
+      this.sharedWithUsers = todoList.shared_with ?? [];
     }
   }
 }

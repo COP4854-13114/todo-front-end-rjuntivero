@@ -3,7 +3,20 @@
   <mat-card-content
     ><div class="heading">
       <div class="title">
+        @if (!editingTitle() && todoListSignal()!.created_by ===
+        this.authSvc.UserSignal()?.id) {
+        <h1 (click)="startEditing()">{{ todoListSignal()!.title }}</h1>
+        } @else if (editingTitle()) {
+        <input
+          [formControl]="titleFormControl"
+          (blur)="submitTitle()"
+          (keydown.enter)="submitTitle()"
+          (keydown.escape)="editingTitle.set(false)"
+        />
+        } @else {
         <h1>{{ todoListSignal()!.title }}</h1>
+        }
+
         <div class="right">
           <!-- Status / Visibility Group -->
           <div class="status-icons">

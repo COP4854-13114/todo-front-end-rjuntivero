@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { Token } from '../models/Token.model';
 import { NewUser } from '../models/User_in.model';
 import { User } from '../models/User.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class AuthService {
   UserSignal = signal<User | null>(null);
   isLoading = signal(false);
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private snackBar: MatSnackBar) {
     const user = localStorage.getItem('user');
     if (user) {
       try {
@@ -23,6 +24,15 @@ export class AuthService {
         this.UserSignal.set(null);
       }
     }
+  }
+
+  showMessage(message: string, type: 'success' | 'error' | 'info') {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: [`snackbar-${type}`],
+    });
   }
 
   isLoggedIn(): boolean {
@@ -52,8 +62,7 @@ export class AuthService {
       localStorage.setItem('user', JSON.stringify(result));
       return;
     } catch (err) {
-      console.log('Error fetching user info:', err);
-      return;
+      throw err;
     }
   }
 
@@ -70,11 +79,10 @@ export class AuthService {
       this.TokenSignal.set(result.token);
 
       await this.FetchUser();
-
+      this.showMessage('Login successful!', 'success');
       return true;
     } catch (err) {
-      console.log(err);
-      return false;
+      throw err;
     } finally {
       this.isLoading.set(false);
     }
@@ -98,10 +106,13 @@ export class AuthService {
       let res = await firstValueFrom(
         this.httpClient.post<User>(`${this.BASE_URL}/user`, newUser)
       );
+      this.showMessage(
+        'Registration successful! You can now log in.',
+        'success'
+      );
       return res;
     } catch (err) {
-      console.log(err);
-      return err;
+      throw err;
     } finally {
       this.isLoading.set(true);
     }

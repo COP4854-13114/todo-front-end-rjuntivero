@@ -3,11 +3,10 @@
   <main class="main-content">
     @if (isRegisterMode()) {
     <h1>Register</h1>
-
     } @else {
     <h1>Login</h1>
-
     }
+
     <form class="example-form" (ngSubmit)="handleSubmit()">
       @if (isRegisterMode()) {
       <mat-form-field class="example-full-width">
@@ -15,9 +14,12 @@
         <input [formControl]="nameFormControl" type="text" matInput />
         @if (nameFormControl.hasError('required')) {
         <mat-error>Name is <strong>required</strong></mat-error>
+        } @if (nameFormControl.hasError('backend')) {
+        <mat-error>{{ nameFormControl.getError("backend") }}</mat-error>
         }
       </mat-form-field>
       }
+
       <mat-form-field class="example-full-width">
         <mat-label>Email</mat-label>
         <input
@@ -31,15 +33,21 @@
         <mat-error>Please enter a valid email address</mat-error>
         } @if (emailFormControl.hasError('required')) {
         <mat-error>Email is <strong>required</strong></mat-error>
+        } @if (emailFormControl.hasError('backend')) {
+        <mat-error>{{ emailFormControl.getError("backend") }}</mat-error>
         }
       </mat-form-field>
+
       <mat-form-field class="example-full-width">
         <mat-label>Password</mat-label>
         <input [formControl]="passwordFormControl" type="password" matInput />
         @if (passwordFormControl.hasError('required')) {
         <mat-error>Password is <strong>required</strong></mat-error>
+        } @if (passwordFormControl.hasError('backend')) {
+        <mat-error>{{ passwordFormControl.getError("backend") }}</mat-error>
         }
       </mat-form-field>
+
       <button
         type="submit"
         [disabled]="
@@ -48,10 +56,12 @@
           (nameFormControl.invalid && isRegisterMode())
         "
       >
-        @if (!isRegisterMode()) { Login } @else {Sign Up}
+        @if (!isRegisterMode()) { Login } @else { Sign Up }
       </button>
     </form>
+
     <hr />
+
     <div class="register">
       @if (!isRegisterMode()) {
       <h3>Don't have an account?</h3>

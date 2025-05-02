@@ -24,6 +24,10 @@ h1 {
   font-weight: bold;
 }
 
+h3 {
+  color: var(--accent-color);
+}
+
 form {
   display: flex;
   flex-direction: column;

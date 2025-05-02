@@ -99,3 +99,18 @@ app-todolist-item:not(:last-child) {
 ::ng-deep .share {
   color: #ff8c00;
 }
+
+::ng-deep .mat-tooltip {
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+  padding: 0.5rem !important;
+  border-radius: 4px !important;
+  font-family: "Lexend", sans-serif !important;
+}
+
+input {
+  background-color: transparent;
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: "Lexend", sans-serif;
+}

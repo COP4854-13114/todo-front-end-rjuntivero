@@ -3,6 +3,16 @@
   <main class="main-content">
     <h1>Share List</h1>
 
+    <!-- Shared Users List -->
+    <div class="shared-users" *ngIf="sharedWithUsers.length > 0">
+      <h3>Shared With:</h3>
+      <ul>
+        @for (sharedUser of sharedWithUsers; track sharedUser.email) {
+        <li>{{ sharedUser.email }}</li>
+        }
+      </ul>
+    </div>
+
     <form (ngSubmit)="handleSubmit()">
       <!-- Email Input (Required) -->
       <mat-form-field class="example-full-width">

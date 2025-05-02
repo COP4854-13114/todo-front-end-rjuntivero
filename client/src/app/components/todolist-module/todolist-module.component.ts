@@ -8,6 +8,8 @@ import { TodoList } from '../../models/TodoList.model';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -23,6 +25,8 @@ import { AddListItemDialogComponent } from '../add-list-item-dialog/add-list-ite
 import { ShareListDialogComponent } from '../share-list-dialog/share-list-dialog.component';
 import { TodoListItemsService } from '../../services/todolistitems.service';
 import { TodolistItemComponent } from '../todolist-item/todolist-item.component';
+import { FormControl, Validators } from '@angular/forms';
+import { TodosService } from '../../services/todos.service';
 
 @Component({
   selector: 'app-todolist-module',
@@ -34,6 +38,7 @@ import { TodolistItemComponent } from '../todolist-item/todolist-item.component'
     MatCheckboxModule,
     MatTooltipModule,
     TodolistItemComponent,
+    ReactiveFormsModule,
   ],
   templateUrl: './todolist-module.component.html',
   styleUrl: './todolist-module.component.css',
@@ -41,11 +46,52 @@ import { TodolistItemComponent } from '../todolist-item/todolist-item.component'
 export class TodolistModuleComponent {
   constructor(
     public authSvc: AuthService,
+    private todoSvc: TodosService,
     private dialog: MatDialog,
     private todoListItemsSvc: TodoListItemsService
   ) {}
 
   todoListSignal = signal<TodoList | null>(null);
+  editingTitle = signal(false);
+  titleFormControl = new FormControl('', [Validators.required]);
+
+  startEditing() {
+    this.editingTitle.set(true);
+    this.titleFormControl.setValue(this.todoListSignal()!.title);
+  }
+
+  async submitTitle() {
+    const newTitle = this.titleFormControl.value?.trim();
+
+    // If empty → don't allow
+    if (!newTitle) {
+      this.todoSvc.showMessage("Title can't be empty.", 'error');
+      this.editingTitle.set(false);
+      return;
+    }
+
+    // If unchanged → don't patch
+    if (newTitle === this.todoListSignal()!.title) {
+      this.editingTitle.set(false);
+      return;
+    }
+
+    this.editingTitle.set(false);
+
+    const currentList = this.todoListSignal()!;
+    const payload = {
+      title: newTitle,
+      public_list: currentList.public_list,
+    };
+
+    try {
+      await this.todoSvc.UpdateTodoList(currentList.id, payload);
+      await this.todoSvc.RefreshTodoLists();
+      this.todoSvc.showMessage('List title updated!', 'success');
+    } catch (err) {
+      this.todoSvc.showMessage('Failed to update title.', 'error');
+    }
+  }
 
   @Input() set TodoList(value: TodoList) {
     this.todoListSignal.set(value);

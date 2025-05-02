@@ -138,6 +138,25 @@ export class TodosService {
     }
   }
 
+  async UpdateTodoList(
+    list_id: number,
+    updateData: { title: string; public_list: boolean }
+  ) {
+    this.isLoading.set(true);
+    try {
+      await firstValueFrom(
+        this.httpClient.patch(`${this.BASE_URL}/todo/${list_id}`, updateData, {
+          headers: this.getHeaders(),
+        })
+      );
+      await this.RefreshTodoLists();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
   async DeleteTodoList(list: TodoList) {
     this.isLoading.set(true);
     try {
