@@ -213,4 +213,16 @@ export class TodosService {
       this.isLoading.set(false);
     }
   }
+
+  async UpdateTodoListItem(list_id: number, item_id: number, payload: any) {
+    return await firstValueFrom(
+      this.httpClient.patch(
+        `${this.BASE_URL}/todo/${list_id}/items/${item_id}`,
+        payload,
+        {
+          headers: this.getHeaders(),
+        }
+      )
+    );
+  }
 }

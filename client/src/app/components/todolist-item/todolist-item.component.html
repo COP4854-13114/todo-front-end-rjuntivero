@@ -7,11 +7,15 @@
     <h1 [class.completed]="item.completed">{{ item.task }}</h1>
   </mat-checkbox>
 
-  @if(this.authSvc.isLoggedIn() && this.authSvc.UserSignal()?.id ===
+  @if (this.authSvc.isLoggedIn() && this.authSvc.UserSignal()?.id ===
   this.todoSvc.SelectedTodoList()!.created_by) {
-  <button (click)="deleteItem()">
-    <mat-icon>close</mat-icon>
-  </button>
-
+  <div class="actions">
+    <button (click)="openEditDialog()">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button (click)="deleteItem()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
   }
 </div>

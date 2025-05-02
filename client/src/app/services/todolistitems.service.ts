@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TodosService } from './todos.service';
 import { TodoListItem_in } from '../models/TodoListItem_in.model';
 import { TodoListItem_Patch } from '../models/TodoListItem_Patch.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,11 @@ export class TodoListItemsService {
   TodoListItemsSignal = signal<TodoListItem[] | null>([]);
   headers = new HttpHeaders();
 
-  constructor(private httpClient: HttpClient, private todosSvc: TodosService) {
+  constructor(
+    private httpClient: HttpClient,
+    private todosSvc: TodosService,
+    private snackBar: MatSnackBar
+  ) {
     effect(() => {
       const selectedList = this.todosSvc.SelectedTodoList();
 

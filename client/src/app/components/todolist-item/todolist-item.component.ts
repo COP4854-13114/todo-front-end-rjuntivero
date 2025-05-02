@@ -6,6 +6,8 @@ import { MatIcon } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { TodosService } from '../../services/todos.service';
+import { EditTodoListItemDialogComponent } from '../edit-todo-list-item-dialog/edit-todo-list-item-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-todolist-item',
@@ -20,8 +22,25 @@ export class TodolistItemComponent {
   constructor(
     private todoListItemsSvc: TodoListItemsService,
     public authSvc: AuthService,
-    public todoSvc: TodosService
+    public todoSvc: TodosService,
+    private dialog: MatDialog
   ) {}
+
+  openEditDialog() {
+    const dialogRef = this.dialog.open(EditTodoListItemDialogComponent, {
+      data: this.item,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Item updated:', result);
+        // Optionally refresh todo items
+        this.todoListItemsSvc.RefreshTodoListItems(
+          this.todoSvc.SelectedTodoList()!.id
+        );
+      }
+    });
+  }
 
   toggleCompleted(completed: boolean) {
     if (this.disabled) return;

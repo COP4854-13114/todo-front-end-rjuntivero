@@ -53,6 +53,12 @@
                 >ios_share</mat-icon
               >
             </button>
+            <button (click)="togglePublic()" matTooltip="Toggle Public/Private">
+              <mat-icon>{{
+                todoListSignal()!.public_list ? "lock" : "public"
+              }}</mat-icon>
+            </button>
+
             }
           </div>
         </div>

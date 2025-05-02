@@ -60,6 +60,24 @@ export class TodolistModuleComponent {
     this.titleFormControl.setValue(this.todoListSignal()!.title);
   }
 
+  async togglePublic() {
+    const currentList = this.todoListSignal()!;
+    const newPublicStatus = !currentList.public_list;
+
+    const payload = {
+      title: currentList.title,
+      public_list: newPublicStatus,
+    };
+
+    try {
+      await this.todoSvc.UpdateTodoList(currentList.id, payload);
+      await this.todoSvc.RefreshTodoLists();
+      this.todoSvc.showMessage('List visibility updated!', 'success');
+    } catch (err) {
+      this.todoSvc.showMessage('Failed to update visibility.', 'error');
+    }
+  }
+
   async submitTitle() {
     const newTitle = this.titleFormControl.value?.trim();
 
