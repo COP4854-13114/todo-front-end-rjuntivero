@@ -185,8 +185,10 @@ export class TodosService {
         })
       );
       await this.RefreshTodoLists();
+      this.showMessage('List deleted successfully!', 'success');
     } catch (err) {
       console.log(err);
+      this.showMessage('Failed to delete List', 'error');
     } finally {
       this.isLoading.set(false);
     }
@@ -204,7 +206,7 @@ export class TodosService {
           }
         )
       );
-
+      this.showMessage('List shared successfully!', 'success');
       return res;
     } catch (err) {
       console.log(err);
@@ -212,17 +214,5 @@ export class TodosService {
     } finally {
       this.isLoading.set(false);
     }
-  }
-
-  async UpdateTodoListItem(list_id: number, item_id: number, payload: any) {
-    return await firstValueFrom(
-      this.httpClient.patch(
-        `${this.BASE_URL}/todo/${list_id}/items/${item_id}`,
-        payload,
-        {
-          headers: this.getHeaders(),
-        }
-      )
-    );
   }
 }

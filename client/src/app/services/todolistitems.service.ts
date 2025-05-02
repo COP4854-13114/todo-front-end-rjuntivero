@@ -32,6 +32,15 @@ export class TodoListItemsService {
     });
   }
 
+  showMessage(message: string, type: 'success' | 'error' | 'info') {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: [`snackbar-${type}`],
+    });
+  }
+
   getHeaders(): HttpHeaders {
     const token = localStorage.getItem('authToken');
 
@@ -76,6 +85,7 @@ export class TodoListItemsService {
       );
 
       this.RefreshTodoListItems(todoListId);
+      this.showMessage('Todo item added successfully!', 'success');
       return res;
     } catch (err) {
       console.log(err);
@@ -98,9 +108,11 @@ export class TodoListItemsService {
           }
         )
       );
+      this.showMessage('Todo item updated successfully!', 'success');
       return res;
     } catch (err) {
       console.log(err);
+      this.showMessage('Failed to update todo item.', 'error');
       return err;
     }
   }
@@ -117,9 +129,11 @@ export class TodoListItemsService {
       );
 
       this.RefreshTodoListItems(todoListId);
+      this.showMessage('Todo item deleted successfully!', 'success');
       return;
     } catch (err) {
       console.log(err);
+      this.showMessage('Failed to delete todo item.', 'error');
       return err;
     }
   }
