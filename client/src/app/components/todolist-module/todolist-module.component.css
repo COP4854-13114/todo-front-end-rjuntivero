@@ -30,14 +30,42 @@ h3 {
 .right {
   display: flex;
   align-items: center;
-  gap: var(--sm);
+  gap: var(--md);
+}
+
+.status-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.status-icons mat-icon {
+  font-size: 1.5rem; /* smaller size */
+  color: var(--secondary-color);
+  opacity: 0.65; /* slightly faded */
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 button {
-  padding: var(--sm);
   background-color: transparent;
   border: none;
   border-radius: 20px;
+  padding: 0;
 }
 
 mat-icon {
@@ -49,4 +77,25 @@ mat-icon {
 
 app-todolist-item:not(:last-child) {
   border-bottom: 1px solid var(--secondary-color);
+}
+
+::ng-deep .owned {
+  color: var(--secondary-color);
+  font-size: 1.25rem;
+}
+
+::ng-deep .delete {
+  color: var(--accent-color);
+}
+
+::ng-deep .public {
+  color: var(--secondary-color);
+}
+
+::ng-deep .add-item {
+  color: var(--main-color);
+}
+
+::ng-deep .share {
+  color: #ff8c00;
 }

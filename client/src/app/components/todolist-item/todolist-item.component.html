@@ -4,7 +4,7 @@
     [(ngModel)]="item.completed"
     (change)="toggleCompleted($event.checked)"
   >
-    {{ item.task }}
+    <h1 [class.completed]="item.completed">{{ item.task }}</h1>
   </mat-checkbox>
 
   @if(this.authSvc.isLoggedIn() && this.authSvc.UserSignal()?.id ===

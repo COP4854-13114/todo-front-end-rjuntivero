@@ -1,22 +1,24 @@
 <mat-toolbar>
-  @if (this.authSvc.isLoggedIn()) {
-  <div class="user">
-    <mat-icon>person</mat-icon>
-    <h1>{{ this.authSvc.UserSignal()?.name }}</h1>
-  </div>
-  }
   <span class="example-spacer"></span>
   @if (!this.authSvc.isLoggedIn()) {
   <button mat-raised-button (click)="openDialog('login')">Login</button>
   } @else {
-  <button
-    mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with menu icon"
-    (click)="openDialog('add')"
-  >
-    <mat-icon>post_add</mat-icon>
-  </button>
-  <button mat-raised-button (click)="this.authSvc.Logout()">Logout</button>
+  <div class="toolbar-right">
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+      (click)="openDialog('add')"
+    >
+      <mat-icon class="add-list">post_add</mat-icon>
+    </button>
+    <div class="user">
+      <div class="avatar">
+        <mat-icon>person</mat-icon>
+      </div>
+      <h1>{{ this.authSvc.UserSignal()?.name }}</h1>
+    </div>
+    <button mat-raised-button (click)="this.authSvc.Logout()">Logout</button>
+  </div>
   }
 </mat-toolbar>

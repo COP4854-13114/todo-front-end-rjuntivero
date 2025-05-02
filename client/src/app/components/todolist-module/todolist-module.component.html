@@ -5,40 +5,51 @@
       <div class="title">
         <h1>{{ todoListSignal()!.title }}</h1>
         <div class="right">
-          @if (todoListSignal()!.public_list) {
-          <mat-icon matTooltip="Public list">public</mat-icon>
-          }
-
-          <!-- Owned List -->
-          @if (todoListSignal()!.created_by === this.authSvc.UserSignal()?.id) {
-          <mat-icon matTooltip="My list">person</mat-icon>
-          <button (click)="openDialog('add-item')">
-            <mat-icon matTooltip="Add List Item">add_circle</mat-icon>
-          </button>
-          <button>
-            <mat-icon
-              matTooltip="Delete List"
-              (click)="openDialog('delete-list')"
-              >delete</mat-icon
-            >
-          </button>
-          <button (click)="openDialog('share-list')">
-            <mat-icon matTooltip="Share List">ios_share</mat-icon>
-          </button>
-          }
-
-          <!-- Shared With Me -->
-          @if (this.isSharedWithUser()) {
-          <button (click)="openDialog('add-item')">
-            <mat-icon matTooltip="Add List Item">add_circle</mat-icon>
-          </button>
-          <mat-icon matTooltip="Shared with me">group</mat-icon>
-          }
+          <!-- Status / Visibility Group -->
+          <div class="status-icons">
+            @if (todoListSignal()!.public_list) {
+            <mat-icon matTooltip="Public list" class="public">public</mat-icon>
+            } @if (todoListSignal()!.created_by ===
+            this.authSvc.UserSignal()?.id) {
+            <mat-icon class="owned" matTooltip="My list">person</mat-icon>
+            } @if (this.isSharedWithUser()) {
+            <mat-icon matTooltip="Shared with me" class="owned">group</mat-icon>
+            }
+          </div>
+          <!-- Actions Group -->
+          <div class="actions">
+            @if (todoListSignal()!.created_by === this.authSvc.UserSignal()?.id
+            || this.isSharedWithUser()) {
+            <button (click)="openDialog('add-item')">
+              <mat-icon matTooltip="Add List Item" class="add-item"
+                >add</mat-icon
+              >
+            </button>
+            } @if (todoListSignal()!.created_by ===
+            this.authSvc.UserSignal()?.id) {
+            <button>
+              <mat-icon
+                class="delete"
+                matTooltip="Delete List"
+                (click)="openDialog('delete-list')"
+                >delete</mat-icon
+              >
+            </button>
+            <button (click)="openDialog('share-list')">
+              <mat-icon matTooltip="Share List" class="share"
+                >ios_share</mat-icon
+              >
+            </button>
+            }
+          </div>
         </div>
       </div>
-      <h3>
-        Created on: {{ todoListSignal()!.created_at | date : "MMMM d, y" }}
-      </h3>
+
+      <div class="details">
+        <h3>
+          Created on: {{ todoListSignal()!.created_at | date : "MMMM d, y" }}
+        </h3>
+      </div>
     </div>
     <div class="list_items">
       @for (item of visibleItems(); track item.id) {

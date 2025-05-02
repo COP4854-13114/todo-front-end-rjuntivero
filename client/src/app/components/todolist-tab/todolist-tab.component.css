@@ -36,3 +36,19 @@ button h2 {
   transition: all 0.2s ease-in-out;
   font-weight: 600;
 }
+
+mat-icon.public svg {
+  fill: #4caf50 !important;
+}
+
+mat-icon.owned svg {
+  fill: #1976d2 !important;
+}
+
+mat-icon.shared svg {
+  fill: #ff9800 !important;
+}
+
+mat-icon.delete svg {
+  fill: #f44336 !important;
+}

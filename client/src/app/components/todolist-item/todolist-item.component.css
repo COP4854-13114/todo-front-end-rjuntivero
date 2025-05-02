@@ -15,10 +15,21 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--accent-color);
 }
 
 button:hover {
   background-color: var(--background-color);
   filter: brightness(0.9);
   transition: all 0.2s ease-out;
+}
+
+mat-checkbox h1 {
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
 }

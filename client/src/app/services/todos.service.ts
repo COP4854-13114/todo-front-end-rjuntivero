@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { firstValueFrom, Observable } from 'rxjs';
 import { User } from '../models/User.model';
 import { TodoList_in } from '../models/TodoList_in.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -18,12 +19,25 @@ export class TodosService {
   ListViewSignal = signal<number>(0);
   headers = new HttpHeaders();
 
-  constructor(private httpClient: HttpClient, private authSvc: AuthService) {
+  constructor(
+    private httpClient: HttpClient,
+    private authSvc: AuthService,
+    private snackBar: MatSnackBar
+  ) {
     effect(() => {
       const token = this.authSvc.TokenSignal();
       const view = this.ListViewSignal();
 
       this.RefreshTodoLists();
+    });
+  }
+
+  showMessage(message: string, type: 'success' | 'error' | 'info') {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: [`snackbar-${type}`],
     });
   }
 
@@ -113,9 +127,11 @@ export class TodosService {
         })
       );
       await this.RefreshTodoLists();
+      this.showMessage('List created successfully!', 'success');
       return res;
     } catch (err) {
       console.log(err);
+      this.showMessage('Failed to create list.', 'error');
       return null;
     } finally {
       this.isLoading.set(false);
