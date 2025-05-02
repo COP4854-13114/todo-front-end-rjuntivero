@@ -4,10 +4,10 @@
     <h1>Share List</h1>
 
     <!-- Shared Users List -->
-    <div class="shared-users" *ngIf="sharedWithUsers.length > 0">
+    <div class="shared-users" *ngIf="sharedWithUsers().length > 0">
       <h3>Shared With:</h3>
       <ul>
-        @for (sharedUser of sharedWithUsers; track sharedUser.email) {
+        @for (sharedUser of sharedWithUsers(); track sharedUser.email) {
         <li>
           {{ sharedUser.email }}
           <button

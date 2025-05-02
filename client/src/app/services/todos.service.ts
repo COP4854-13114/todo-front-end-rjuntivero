@@ -74,7 +74,13 @@ export class TodosService {
     const filtered = this.filterTodoLists(todoLists ?? [], option, user);
 
     if (filtered.length > 0) {
-      this.SelectedTodoList.set(filtered[0]);
+      const fullList = await this.GetTodoList(filtered[0].id);
+
+      if (fullList) {
+        this.SelectedTodoList.set(fullList);
+      } else {
+        this.SelectedTodoList.set(filtered[0]);
+      }
     } else {
       this.SelectedTodoList.set(null);
     }
