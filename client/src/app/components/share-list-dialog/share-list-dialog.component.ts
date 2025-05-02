@@ -45,6 +45,35 @@ export class ShareListDialogComponent {
   close() {
     this.dialogRef.close();
   }
+  async RemoveSharedUser(email: string) {
+    const selectedList = this.todoSvc.SelectedTodoList();
+    if (!selectedList) return;
+
+    try {
+      await this.todoSvc.RemoveSharedUser(selectedList.id, email);
+
+      this.sharedWithUsers = this.sharedWithUsers.filter(
+        (u) => u.email !== email
+      );
+
+      const updatedList = {
+        ...selectedList,
+        shared_with: [...this.sharedWithUsers],
+      };
+
+      this.todoSvc.SelectedTodoList.set(updatedList);
+
+      this.todoSvc.showMessage('User removed from shared list.', 'success');
+    } catch (err) {
+      console.error(err);
+
+      const error = err as any;
+      const status = error?.status;
+      const message = error?.error?.message || 'An error occurred';
+
+      this.emailFormControl.setErrors({ backend: message });
+    }
+  }
 
   async handleSubmit() {
     if (this.emailFormControl.invalid) return;

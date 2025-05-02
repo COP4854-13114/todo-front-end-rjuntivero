@@ -80,6 +80,25 @@ export class TodosService {
     }
   }
 
+  async RemoveSharedUser(list_id: number, sharedUser: string) {
+    this.isLoading.set(true);
+    try {
+      await firstValueFrom(
+        this.httpClient.delete(
+          `${this.BASE_URL}/todo/${list_id}/share/${sharedUser}`,
+          {
+            headers: this.getHeaders(),
+          }
+        )
+      );
+    } catch (err) {
+      console.log(err);
+      throw err;
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
   async GetTodoLists() {
     this.isLoading.set(true);
     try {

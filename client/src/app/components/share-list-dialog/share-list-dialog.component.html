@@ -8,7 +8,15 @@
       <h3>Shared With:</h3>
       <ul>
         @for (sharedUser of sharedWithUsers; track sharedUser.email) {
-        <li>{{ sharedUser.email }}</li>
+        <li>
+          {{ sharedUser.email }}
+          <button
+            (click)="RemoveSharedUser(sharedUser.email)"
+            style="color: red; background: none; border: none; cursor: pointer"
+          >
+            Remove
+          </button>
+        </li>
         }
       </ul>
     </div>
