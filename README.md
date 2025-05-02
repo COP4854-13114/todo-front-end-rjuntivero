@@ -32,6 +32,8 @@ This frontend application uses the following backend service:
 
 ---
 
+> **Note:** Some features, such as editing the Todo List title, can be accessed by clicking directly on the Todo List title on the Todo List card.
+
 # Development Information
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
