@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root',
 })
 export class AuthService {
-  BASE_URL = 'https://unfspring2025wfa3.azurewebsites.net';
+  BASE_URL = import.meta.env.NG_APP_BACKEND_URL;
   TokenSignal = signal<string | null>(localStorage.getItem('authToken'));
   UserSignal = signal<User | null>(null);
   isLoading = signal(false);

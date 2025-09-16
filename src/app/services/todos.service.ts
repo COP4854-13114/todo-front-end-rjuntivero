@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root',
 })
 export class TodosService {
-  BASE_URL = 'https://unfspring2025wfa3.azurewebsites.net';
+  BASE_URL = import.meta.env.NG_APP_BACKEND_URL;
 
   TodoListsSignal = signal<TodoList[] | null>([]);
   SelectedTodoList = signal<TodoList | null>(null);
