@@ -1,0 +1,27 @@
+<div class="wrapper">
+  <button (click)="close()" class="closeButton">X</button>
+  <main class="main-content">
+    <h1>Create New Todo List</h1>
+
+    <form (ngSubmit)="handleSubmit()">
+      <!-- Title Input -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Title</mat-label>
+        <input [formControl]="titleFormControl" type="text" matInput />
+        @if (titleFormControl.hasError('required')) {
+        <mat-error>Title is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Public Toggle -->
+      <mat-slide-toggle [formControl]="publicFormControl">
+        Make Public
+      </mat-slide-toggle>
+
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="titleFormControl.invalid">
+        Create Todo List
+      </button>
+    </form>
+  </main>
+</div>

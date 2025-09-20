@@ -1,0 +1,54 @@
+mat-toolbar {
+  background: none;
+  min-width: fit-content;
+  display: flex;
+  gap: var(--sm);
+  font-family: inherit;
+  align-items: center;
+}
+
+mat-toolbar h1 {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+::ng-deep .add-list {
+  color: var(--accent-color);
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  padding: var(--sm);
+  margin: none;
+  cursor: pointer;
+}
+
+.user {
+  display: flex;
+  gap: var(--sm);
+  align-items: center;
+}
+
+.avatar {
+  background-color: var(--secondary-color);
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar mat-icon {
+  font-size: 20px;
+  width: fit-content;
+  height: fit-content;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

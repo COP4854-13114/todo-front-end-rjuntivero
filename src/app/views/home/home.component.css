@@ -1,0 +1,39 @@
+:host {
+  display: flex;
+  flex: 1;
+  height: 100vh;
+  flex-direction: column;
+}
+
+:host ::ng-deep mat-spinner circle {
+  stroke: var(--trim-color);
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: var(--background-color);
+}
+
+main {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--md);
+  /* border: 6px solid blue; */
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+}
+
+.wrapper {
+  padding: var(--med-padding);
+  display: flex;
+  flex: 1;
+  background-color: var(--background-color);
+}

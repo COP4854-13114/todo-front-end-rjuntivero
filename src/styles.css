@@ -1,0 +1,91 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --mat-sys-body-medium-font: inherit;
+  --mat-sys-body-medium-size: inherit;
+  --mat-sys-body-medium-weight: inherit;
+  --mat-sys-body-large-font: inherit;
+  --mat-sys-body-large-size: inherit;
+  --mat-sys-body-large-weight: inherit;
+  --main-color: #2b2d42;
+  --accent-color: #ef233c;
+  --secondary-color: #8d99ae;
+  --background-color: #f9f9f9;
+  --trim-color: #d90429;
+  --shadow-1: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  --sm-padding: 12px;
+  --med-padding: 32px;
+  --large-padding: 64px;
+  --xs: 4px;
+  --sm: 8px;
+  --md: 24px;
+  --lg: 36px;
+  --xl: 48px;
+  --2xl: 64px;
+  --3xl: 96px;
+  --4xl: 128px;
+  --5xl: 160px;
+  --6xl: 192px;
+  --7xl: 224px;
+  --8xl: 256px;
+  --9xl: 288px;
+  --10xl: 320px;
+  --11xl: 384px;
+  --12xl: 448px;
+
+  ::-webkit-scrollbar {
+    width: var(--sm);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--main-color);
+    border-radius: 4px;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.debug {
+  border: 4px solid red;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Snackbar Notifs */
+.snackbar-success {
+  background-color: green !important;
+  color: white !important;
+}
+
+.snackbar-error {
+  background-color: red !important;
+  color: white !important;
+}
+
+.snackbar-info {
+  background-color: blue !important;
+  color: white !important;
+}

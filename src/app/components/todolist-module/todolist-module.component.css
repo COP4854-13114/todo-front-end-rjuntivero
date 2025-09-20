@@ -1,0 +1,116 @@
+mat-card {
+  border-radius: var(--sm);
+  padding: var(--md);
+  border-color: var(--secondary-color);
+  /* box-shadow: var(--shadow-1); */
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--md);
+}
+
+.list_items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--md);
+}
+
+h3 {
+  font-weight: 300;
+  color: var(--secondary-color);
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+}
+
+.status-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.status-icons mat-icon {
+  font-size: 1.5rem; /* smaller size */
+  color: var(--secondary-color);
+  opacity: 0.65; /* slightly faded */
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  border-radius: 20px;
+  padding: 0;
+}
+
+mat-icon {
+  font-size: 2rem;
+  width: fit-content;
+  height: fit-content;
+  display: inline-block;
+}
+
+app-todolist-item:not(:last-child) {
+  border-bottom: 1px solid var(--secondary-color);
+}
+
+::ng-deep .owned {
+  color: var(--secondary-color);
+  font-size: 1.25rem;
+}
+
+::ng-deep .delete {
+  color: var(--accent-color);
+}
+
+::ng-deep .public {
+  color: var(--secondary-color);
+}
+
+::ng-deep .add-item {
+  color: var(--main-color);
+}
+
+::ng-deep .share {
+  color: #ff8c00;
+}
+
+::ng-deep .mat-tooltip {
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+  padding: 0.5rem !important;
+  border-radius: 4px !important;
+  font-family: "Lexend", sans-serif !important;
+}
+
+input {
+  background-color: transparent;
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: "Lexend", sans-serif;
+}

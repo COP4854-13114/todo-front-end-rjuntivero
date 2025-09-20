@@ -1,0 +1,14 @@
+<nav class="">
+  <div>
+    @if (this.todoSvc.ListViewSignal() === 0) {
+    <h1>Public TodoLists</h1>
+    } @else if (this.todoSvc.ListViewSignal() === 1) {
+    <h1>My TodoLists</h1>
+    }@else if (this.todoSvc.ListViewSignal() === 2) {
+    <h1>Shared TodoLists</h1>
+    }
+  </div>
+  <div>
+    <app-actionbutton />
+  </div>
+</nav>

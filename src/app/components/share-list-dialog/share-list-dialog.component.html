@@ -1,0 +1,42 @@
+<div class="wrapper">
+  <button (click)="close()" class="closeButton">X</button>
+  <main class="main-content">
+    <h1>Share List</h1>
+
+    <!-- Shared Users List -->
+    <div class="shared-users" *ngIf="sharedWithUsers().length > 0">
+      <h3>Shared With:</h3>
+      <ul>
+        @for (sharedUser of sharedWithUsers(); track sharedUser.email) {
+        <li>
+          {{ sharedUser.email }}
+          <button
+            (click)="RemoveSharedUser(sharedUser.email)"
+            style="color: red; background: none; border: none; cursor: pointer"
+          >
+            Remove
+          </button>
+        </li>
+        }
+      </ul>
+    </div>
+
+    <form (ngSubmit)="handleSubmit()">
+      <!-- Email Input (Required) -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Email to Share</mat-label>
+        <input [formControl]="emailFormControl" type="email" matInput />
+        @if (emailFormControl.hasError('required')) {
+        <mat-error>Email is <strong>required</strong></mat-error>
+        } @if (emailFormControl.hasError('email')) {
+        <mat-error>Enter a <strong>valid email</strong></mat-error>
+        } @if (emailFormControl.hasError('backend')) {
+        <mat-error>{{ emailFormControl.getError("backend") }}</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Share Button -->
+      <button type="submit" [disabled]="emailFormControl.invalid">Share</button>
+    </form>
+  </main>
+</div>

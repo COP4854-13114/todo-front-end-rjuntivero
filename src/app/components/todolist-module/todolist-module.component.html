@@ -1,0 +1,85 @@
+@if (isReady()) {
+<mat-card appearance="outlined">
+  <mat-card-content
+    ><div class="heading">
+      <div class="title">
+        @if (!editingTitle() && todoListSignal()!.created_by ===
+        this.authSvc.UserSignal()?.id) {
+        <h1 (click)="startEditing()">{{ todoListSignal()!.title }}</h1>
+        } @else if (editingTitle()) {
+        <input
+          [formControl]="titleFormControl"
+          (blur)="submitTitle()"
+          (keydown.enter)="submitTitle()"
+          (keydown.escape)="editingTitle.set(false)"
+        />
+        } @else {
+        <h1>{{ todoListSignal()!.title }}</h1>
+        }
+
+        <div class="right">
+          <!-- Status / Visibility Group -->
+          <div class="status-icons">
+            @if (todoListSignal()!.public_list) {
+            <mat-icon matTooltip="Public list" class="public">public</mat-icon>
+            } @if (todoListSignal()!.created_by ===
+            this.authSvc.UserSignal()?.id) {
+            <mat-icon class="owned" matTooltip="My list">person</mat-icon>
+            } @if (this.isSharedWithUser()) {
+            <mat-icon matTooltip="Shared with me" class="owned">group</mat-icon>
+            }
+          </div>
+          <!-- Actions Group -->
+          <div class="actions">
+            @if (todoListSignal()!.created_by === this.authSvc.UserSignal()?.id
+            || this.isSharedWithUser()) {
+            <button (click)="openDialog('add-item')">
+              <mat-icon matTooltip="Add List Item" class="add-item"
+                >add</mat-icon
+              >
+            </button>
+            } @if (todoListSignal()!.created_by ===
+            this.authSvc.UserSignal()?.id) {
+            <button>
+              <mat-icon
+                class="delete"
+                matTooltip="Delete List"
+                (click)="openDialog('delete-list')"
+                >delete</mat-icon
+              >
+            </button>
+            <button (click)="openDialog('share-list')">
+              <mat-icon matTooltip="Share List" class="share"
+                >ios_share</mat-icon
+              >
+            </button>
+            <button (click)="togglePublic()" matTooltip="Toggle Public/Private">
+              <mat-icon>{{
+                todoListSignal()!.public_list ? "lock" : "public"
+              }}</mat-icon>
+            </button>
+
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="details">
+        <h3>
+          Created on: {{ todoListSignal()!.created_at | date : "MMMM d, y" }}
+        </h3>
+      </div>
+    </div>
+    <div class="list_items">
+      @for (item of visibleItems(); track item.id) {
+      <app-todolist-item
+        [item]="item"
+        [disabled]="isDisabled()"
+      ></app-todolist-item>
+
+      }
+    </div>
+  </mat-card-content>
+</mat-card>
+
+}

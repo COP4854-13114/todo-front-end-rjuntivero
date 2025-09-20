@@ -1,0 +1,34 @@
+<aside class="sidebar">
+  <div class="actions">
+    @for (option of this.options; track $index) {
+    <button
+      mat-raised-button
+      [ngClass]="{ selected: this.todoSvc.ListViewSignal() === $index }"
+      (click)="toggleOption($index)"
+    >
+      <mat-icon>
+        {{
+          option === "Public"
+            ? "public"
+            : option === "Owned"
+            ? "person"
+            : option === "Shared"
+            ? "group"
+            : ""
+        }}
+      </mat-icon>
+    </button>
+    }
+  </div>
+  <div class="todolists">
+    <ul>
+      @for (todolist of filteredTodoLists(); track todolist.id) {
+      <li>
+        <app-todolist-tab [TodoList]="todolist">{{
+          todolist
+        }}</app-todolist-tab>
+      </li>
+      }
+    </ul>
+  </div>
+</aside>
